@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "dev:backend": "ts-node-dev --respawn backend/main.ts",
+    "dev:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/main.ts",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
