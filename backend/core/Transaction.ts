@@ -1,4 +1,4 @@
-import { createHash } from './utils';
+import { createHash } from '../utils';
 
 export class Transaction {
     constructor(

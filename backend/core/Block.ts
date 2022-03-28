@@ -1,5 +1,5 @@
 import { Transaction } from './Transaction';
-import { createHash } from './utils';
+import { createHash } from '../utils';
 
 export class Block {
     constructor(
