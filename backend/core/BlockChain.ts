@@ -13,6 +13,41 @@ export class BlockChain {
     private pendingTransactions: Transaction[] = [];
 
     /**
+     * Size of the chain.
+     */
+    get size(): number {
+        return this.chain.length;
+    }
+
+    /**
+     * Genesis block (first block in the chain).
+     */
+    get genesisBlock(): Block {
+        return this.chain[0];
+    }
+
+    /**
+     * Last block in the chain.
+     *
+     * Getting the latest block in the blockchain assists in ensuring the hash of the current block
+     * points to the hash of the previous block — thus maintaining the chain’s integrity.
+     */
+    get lastBlock(): Block {
+        return this.chain[this.size - 1];
+    }
+
+    /**
+     * Next block to be mined.
+     */
+    get nextBlock(): Block {
+        return new Block(
+            this.size,
+            this.lastBlock.hash,
+            this.pendingTransactions
+        );
+    }
+
+    /**
      * Add new transaction to the blockchain.
      */
     addTransaction(tx: Transaction): void {
