@@ -1,3 +1,5 @@
+import { createHash } from './utils';
+
 export class Transaction {
     constructor(
         public from: string,
@@ -5,5 +7,11 @@ export class Transaction {
         public amount: number,
         public timestamp: number = Date.now(),
         public hash: string = ''
-    ) {}
+    ) {
+        this.hash = this.calculateHash();
+    }
+
+    calculateHash(): string {
+        return createHash(this.from + this.to + this.amount + this.timestamp);
+    }
 }

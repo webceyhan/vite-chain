@@ -1,4 +1,5 @@
 import { Transaction } from './Transaction';
+import { createHash } from './utils';
 
 export class Block {
     constructor(
@@ -7,5 +8,16 @@ export class Block {
         public transactions: Transaction[],
         public timestamp: number = Date.now(),
         public hash: string = ''
-    ) {}
+    ) {
+        this.hash = this.calculateHash();
+    }
+
+    calculateHash(): string {
+        return createHash(
+            this.index +
+                this.parentHash +
+                this.timestamp +
+                this.transactions.map((t) => t.hash).join('')
+        );
+    }
 }
