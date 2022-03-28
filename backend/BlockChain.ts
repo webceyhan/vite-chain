@@ -1,5 +1,10 @@
 import { Block } from './Block';
 
 export class BlockChain {
-    constructor(public chain: Block[]) {}
+    constructor(
+        /**
+         * The chain of blocks starting from the genesis block.
+         */
+        public chain: Block[]
+    ) {}
 }
