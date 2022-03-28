@@ -61,5 +61,8 @@ export class BlockChain {
     addBlock(block: Block): void {
         // todo: validate block
         this.chain.push(block);
+
+        // reset pending transactions
+        this.pendingTransactions = [];
     }
 }
