@@ -5,7 +5,7 @@ export class BlockChain {
     /**
      * The chain of blocks starting from the genesis block.
      */
-    public chain: Block[] = [GENESIS_BLOCK];
+    private chain: Block[] = [GENESIS_BLOCK];
 
     /**
      * Pending transactions to be added to the next block.
@@ -18,5 +18,13 @@ export class BlockChain {
     addTransaction(tx: Transaction): void {
         // todo: validate transaction
         this.pendingTransactions.push(tx);
+    }
+
+    /**
+     * Add new block to the blockchain.
+     */
+    addBlock(block: Block): void {
+        // todo: validate block
+        this.chain.push(block);
     }
 }
