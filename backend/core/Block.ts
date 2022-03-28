@@ -2,6 +2,11 @@ import { Transaction } from './Transaction';
 import { createHash } from '../utils';
 
 export class Block {
+    /**
+     * Cached hash of the block.
+     */
+    private cachedHash?: string;
+
     constructor(
         /**
          * The index of the block.
@@ -27,15 +32,14 @@ export class Block {
         /**
          * The timestamp on which the block was created.
          */
-        public timestamp: number = Date.now(),
+        public timestamp: number = Date.now()
+    ) {}
 
-        /**
-         * Calculated hash of the block.
-         */
-        public hash: string = ''
-    ) {
-        // set block hash
-        this.hash = this.calculateHash();
+    /**
+     * The unique hash string representing the block.
+     */
+    get hash(): string {
+        return (this.cachedHash ??= this.calculateHash());
     }
 
     /**

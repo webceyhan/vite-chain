@@ -1,6 +1,11 @@
 import { createHash } from '../utils';
 
 export class Transaction {
+    /**
+     * Cached hash of the transaction.
+     */
+    private cachedHash?: string;
+
     constructor(
         /**
          * Sender address of the transaction.
@@ -20,15 +25,14 @@ export class Transaction {
         /**
          * Timestamp on which the transaction was created.
          */
-        public timestamp: number = Date.now(),
+        public timestamp: number = Date.now()
+    ) {}
 
-        /**
-         * Calculated hash of the transaction.
-         */
-        public hash: string = ''
-    ) {
-        // set transaction hash
-        this.hash = this.calculateHash();
+    /**
+     * Unique hash string representing the transaction.
+     */
+    get hash(): string {
+        return (this.cachedHash ??= this.calculateHash());
     }
 
     /**
