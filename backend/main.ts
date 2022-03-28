@@ -1,10 +1,5 @@
-import { Block, BlockChain, Transaction } from './core';
+import { BlockChain } from './core';
 
-const genesisTx = new Transaction('0', 'miner', 100);
-
-const genesisBlock = new Block(0, '', [genesisTx], 1545184500);
-
-const blockChain = new BlockChain([genesisBlock]);
-
+const blockChain = new BlockChain();
 
 console.log(blockChain);

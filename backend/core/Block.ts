@@ -54,3 +54,18 @@ export class Block {
         );
     }
 }
+
+/**
+ * In a blockchain, the genesis block refers to the first-ever block created on the network.
+ * Whenever a block is integrated with the rest of the chain, it should reference the preceding block.
+ *
+ * Conversely, in the case of this initial block, it does not have any preceding block to point to.
+ * Therefore, a genesis block is usually hardcoded into the blockchain. This way,
+ * subsequent blocks can be created on it. It usually has an index of 0.
+ */
+export const GENESIS_BLOCK = new Block(
+    0,
+    '',
+    [new Transaction('0', 'miner', 100)],
+    1545184500
+);
