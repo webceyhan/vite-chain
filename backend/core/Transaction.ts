@@ -1,4 +1,4 @@
-import { ROOT_ADDRESS } from '../constants';
+import { ROOT_ADDRESS, TRANSACTION_COMMISION } from '../constants';
 import { createHash } from '../utils';
 
 export type TransactionType = 'coinbase' | 'transfer';
@@ -50,6 +50,16 @@ export class Transaction {
      */
     get type(): TransactionType {
         return this.isCoinbase ? 'coinbase' : 'transfer';
+    }
+
+    /**
+     * Transaction fee calculated from the amount.
+     *
+     * There is no fee for coinbase transactions
+     * which are created by the node for mining rewards.
+     */
+    get fee(): number {
+        return this.isCoinbase ? 0 : this.amount * TRANSACTION_COMMISION;
     }
 
     /**
