@@ -1,3 +1,4 @@
+import { ROOT_ADDRESS } from '../constants';
 import { Transaction } from './Transaction';
 import { createHash } from '../utils';
 
@@ -106,7 +107,7 @@ export class Block {
 export const GENESIS_BLOCK: Readonly<Block> = new Block(
     0,
     '',
-    [new Transaction('0', 'miner', 100)],
+    [new Transaction(ROOT_ADDRESS, 'miner', 100)],
     0,
     0,
     1545184500

@@ -1,3 +1,4 @@
+import { ROOT_ADDRESS } from '../constants';
 import { createHash } from '../utils';
 
 export class Transaction {
@@ -33,6 +34,13 @@ export class Transaction {
      */
     get hash(): string {
         return (this.cachedHash ??= this.calculateHash());
+    }
+
+    /**
+     * Flag if transaction is coinbase transaction.
+     */
+    get isCoinbase(): boolean {
+        return this.from === ROOT_ADDRESS;
     }
 
     /**
