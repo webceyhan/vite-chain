@@ -1,5 +1,6 @@
-import { Block, GENESIS_BLOCK } from './Block';
+import { delay } from '../utils';
 import { Transaction } from './Transaction';
+import { Block, GENESIS_BLOCK } from './Block';
 
 export class Chain {
     /**
@@ -64,5 +65,38 @@ export class Chain {
 
         // reset pending transactions
         this.pendingTransactions = [];
+    }
+
+    // MINING //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Start mining loop.
+     */
+    async startMiningLoop() {
+        // await for interval to pass
+        await delay(5);
+
+        // mine next block
+        this.mineBlock();
+
+        // repeat mining loop
+        this.startMiningLoop();
+    }
+
+    /**
+     * Create a new block and add it to the chain.
+     */
+    private mineBlock() {
+        // get next block to mine
+        const block = this.nextBlock;
+
+        // compute proof-of-work mechanism
+        block.proofOfWork();
+
+        // add block to chain
+        this.addBlock(block);
+
+        // log block
+        console.log(`Mined block #${block.index}`);
     }
 }

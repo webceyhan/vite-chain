@@ -1,5 +1,5 @@
-import { BlockChain } from './core';
+import { Chain } from './core';
 
-const blockChain = new BlockChain();
+const chain = new Chain();
 
-console.log(blockChain);
+chain.startMiningLoop();
