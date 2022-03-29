@@ -1,6 +1,8 @@
 import { ROOT_ADDRESS } from '../constants';
 import { createHash } from '../utils';
 
+export type TransactionType = 'coinbase' | 'transfer';
+
 export class Transaction {
     /**
      * Cached hash of the transaction.
@@ -41,6 +43,13 @@ export class Transaction {
      */
     get isCoinbase(): boolean {
         return this.from === ROOT_ADDRESS;
+    }
+
+    /**
+     * Type of the transaction.
+     */
+    get type(): TransactionType {
+        return this.isCoinbase ? 'coinbase' : 'transfer';
     }
 
     /**
