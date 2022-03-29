@@ -97,6 +97,6 @@ export class Chain {
         this.addBlock(block);
 
         // log block
-        console.log(`Mined block #${block.index}`);
+        console.log(`Mined block #${block.height}`);
     }
 }

@@ -9,12 +9,12 @@ export class Block {
 
     constructor(
         /**
-         * The index of the block.
+         * The height (index) of the block.
          *
          * It’s a unique number that tracks the position
          * of every block in the entire blockchain.
          */
-        public index: number,
+        public height: number,
 
         /**
          * The hash of the parent block.
@@ -69,7 +69,7 @@ export class Block {
      */
     calculateHash(): string {
         return createHash(
-            this.index +
+            this.height +
                 this.parentHash +
                 this.difficulty +
                 this.nonce +
