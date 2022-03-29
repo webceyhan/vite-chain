@@ -1,6 +1,7 @@
-import { delay } from '../utils';
-import { Transaction } from './Transaction';
+import { BLOCK_TIME_INTERVAL } from '../constants';
 import { Block, GENESIS_BLOCK } from './Block';
+import { Transaction } from './Transaction';
+import { delay } from '../utils';
 
 export class Chain {
     /**
@@ -75,7 +76,7 @@ export class Chain {
      */
     async startMiningLoop() {
         // await for interval to pass
-        await delay(5);
+        await delay(BLOCK_TIME_INTERVAL);
 
         // mine next block
         this.mineBlock();
