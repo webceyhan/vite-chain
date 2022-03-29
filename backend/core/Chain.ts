@@ -44,7 +44,8 @@ export class Chain {
         return new Block(
             this.size,
             this.lastBlock.hash,
-            this.pendingTransactions
+            this.pendingTransactions,
+            this.lastBlock.difficulty
         );
     }
 
