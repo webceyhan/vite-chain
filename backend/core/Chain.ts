@@ -6,12 +6,12 @@ export class Chain {
     /**
      * The chain of blocks starting from the genesis block.
      */
-    private blocks: Block[] = [GENESIS_BLOCK];
+    private blocks: Readonly<Block>[] = [GENESIS_BLOCK];
 
     /**
      * Pending transactions to be added to the next block.
      */
-    private pendingTransactions: Transaction[] = [];
+    private pendingTransactions: Readonly<Transaction>[] = [];
 
     /**
      * Size of the chain.

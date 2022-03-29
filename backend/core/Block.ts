@@ -27,7 +27,7 @@ export class Block {
         /**
          * The list of transactions that are included in the block.
          */
-        public transactions: Transaction[],
+        public transactions: Readonly<Transaction>[],
 
         /**
          * The POW difficulty level of the block.
@@ -103,7 +103,7 @@ export class Block {
  * Therefore, a genesis block is usually hardcoded into the blockchain. This way,
  * subsequent blocks can be created on it. It usually has an index of 0.
  */
-export const GENESIS_BLOCK = new Block(
+export const GENESIS_BLOCK: Readonly<Block> = new Block(
     0,
     '',
     [new Transaction('0', 'miner', 100)],
