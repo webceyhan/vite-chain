@@ -30,6 +30,16 @@ export class Block {
         public transactions: Transaction[],
 
         /**
+         * The POW difficulty level of the block.
+         */
+        public difficulty: number = 0,
+
+        /**
+         * It's nonce for proof-of-work mechanism.
+         */
+        public nonce: number = 0,
+
+        /**
          * The timestamp on which the block was created.
          */
         public timestamp: number = Date.now()
@@ -43,15 +53,45 @@ export class Block {
     }
 
     /**
+     * Flag if block has valid proof.
+     *
+     * Proof is valid if the hash of the block starts with the required number of zeros.
+     */
+    get hasValidProof(): boolean {
+        // define proof string based on zeros
+        const prefix = '0'.repeat(this.difficulty);
+
+        return this.hash.startsWith(prefix);
+    }
+
+    /**
      * Calculate the hash of the block.
      */
     calculateHash(): string {
         return createHash(
             this.index +
                 this.parentHash +
+                this.difficulty +
+                this.nonce +
                 this.timestamp +
                 this.transactions.map((t) => t.hash).join('')
         );
+    }
+
+    /**
+     * Try to guess the nonce of the block until it finds
+     * a valid hash that satisfies the difficulty level.
+     */
+    proofOfWork(): void {
+        // loop until valid proof is found
+        while (!this.hasValidProof) {
+            // increment nonce
+            this.nonce++;
+
+            // clear cached hash to force recalculation
+            // of hash value with new nonce on next call
+            this.cachedHash = undefined;
+        }
     }
 }
 
@@ -67,5 +107,7 @@ export const GENESIS_BLOCK = new Block(
     0,
     '',
     [new Transaction('0', 'miner', 100)],
+    0,
+    0,
     1545184500
 );
