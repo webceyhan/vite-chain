@@ -54,6 +54,19 @@ export class Block {
     }
 
     /**
+     * Sum of all transaction fees in the block.
+     *
+     * This will be included in the coinbase transaction of the block.
+     *
+     * Every transaction may include a transaction fee, in the form of a surplus of bitcoin
+     * between the transaction’s inputs and outputs. The winning bitcoin miner gets
+     * to “keep the change” on the transactions included in the winning block.
+     */
+    get transactionFees(): number {
+        return this.transactions.reduce((sum, tx) => sum + tx.fee, 0);
+    }
+
+    /**
      * Flag if block has valid proof.
      *
      * Proof is valid if the hash of the block starts with the required number of zeros.
