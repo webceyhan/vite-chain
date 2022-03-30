@@ -1,4 +1,9 @@
-import { BLOCK_DIFFICULTY, ROOT_ADDRESS } from '../constants';
+import {
+    ROOT_ADDRESS,
+    BLOCK_DIFFICULTY,
+    BLOCK_REWARD,
+    BLOCK_REWARD_INTERVAL,
+} from '../constants';
 import { Transaction } from './Transaction';
 import { createHash } from '../utils';
 
@@ -64,6 +69,26 @@ export class Block {
      */
     get transactionFees(): number {
         return this.transactions.reduce((sum, tx) => sum + tx.fee, 0);
+    }
+
+    /**
+     * Mining reward for the block.
+     *
+     * Mining is the invention that makes bitcoin special, a decentralized security mechanism
+     * that is the basis for peer-to-peer digital cash. The reward of newly minted coins
+     * and transaction fees is an incentive scheme that aligns the actions of miners
+     * with the security of the network, while simultaneously implementing the monetary supply.
+     */
+    get miningReward(): number {
+        // calculate block reward halving rate
+        const halvingRate = Math.floor(this.height / BLOCK_REWARD_INTERVAL);
+
+        // calculate current block reward based on
+        // initial_reward divided by 2 ** halving_rate
+        const reward = BLOCK_REWARD / Math.pow(2, halvingRate);
+
+        // return reward if available
+        return reward > 0 ? reward : 0;
     }
 
     /**
