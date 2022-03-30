@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bs58check": "^2.1.2",
     "elliptic": "^6.5.4",
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@types/bs58check": "^2.1.0",
     "@types/elliptic": "^6.4.14",
     "@types/node": "^17.0.23",
     "@vitejs/plugin-vue": "^2.2.0",

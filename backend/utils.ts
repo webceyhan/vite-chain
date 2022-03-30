@@ -1,4 +1,5 @@
 import { createHash as _createHash } from 'crypto';
+import bs58check from 'bs58check';
 import { ec } from 'elliptic';
 
 /**
@@ -13,6 +14,26 @@ export const delay = (second: number) =>
  */
 export const createHash = (str: string) =>
     _createHash('sha256').update(str).digest('hex');
+
+// ENCODING HELPERS ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Compress a hexadecimal string with base58Check encoding.
+ *
+ * Result is a base58Check encoded string.
+ * Bitcoin address is a base58Check encoded string with length 34.
+ */
+export const encodeBase58Check = (data: string): string =>
+    bs58check.encode(Buffer.from(data, 'hex'));
+
+/**
+ * Decompress a base58Check decoded string to hexadecimal string.
+ *
+ * Result is a hexadecimal string.
+ * Bitcoin uses base58Check encoding to convert addresses to public keys.
+ */
+export const decodeBase58Check = (data: string): string =>
+    bs58check.decode(data).toString('hex');
 
 // KEY-PAIR HELPERS ////////////////////////////////////////////////////////////////////////////////
 
