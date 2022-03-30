@@ -26,6 +26,15 @@ export class Transaction {
         public amount: number,
 
         /**
+         * Signature of the transaction signed by the sender.
+         *
+         * It is required to verify the transaction made by the sender.
+         * If not provided, it will be considered as coinbase transaction
+         * which was created by the node for mining rewards.
+         */
+        public signature: string = '',
+
+        /**
          * Timestamp on which the transaction was created.
          */
         public timestamp: number = Date.now()

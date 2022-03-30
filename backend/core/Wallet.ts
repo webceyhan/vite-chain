@@ -4,6 +4,7 @@ import {
     encodeBase58Check,
     keyFromPrivate,
 } from '../utils';
+import { Transaction } from './Transaction';
 
 export class Wallet {
     /**
@@ -45,6 +46,20 @@ export class Wallet {
      */
     sign(data: string): string {
         return this.keyPair.sign(data).toDER('hex');
+    }
+
+    /**
+     * Create a new transaction from the wallet.
+     */
+    transact(to: string, amount: number): Transaction {
+        // create unsigned transaction without signature
+        const tx = new Transaction(this.address, to, amount);
+
+        // sign transaction with wallet's private key
+        tx.signature = this.sign(tx.hash);
+
+        // return signed transaction
+        return tx;
     }
 
     // STATIC METHODS //////////////////////////////////////////////////////////////////////////////
