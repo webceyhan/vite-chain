@@ -127,11 +127,11 @@ export class Block {
  * subsequent blocks can be created on it. It usually has an index of 0.
  */
 export const GENESIS_BLOCK: Readonly<Block> = new Block(
-    0,
-    '',
-    [],
-    ROOT_ADDRESS,
-    BLOCK_DIFFICULTY,
-    0,
-    1545184500
+    /* height       */ 0,
+    /* parentHash   */ '0',
+    /* transactions */ [],
+    /* miner        */ ROOT_ADDRESS,
+    /* difficulty   */ BLOCK_DIFFICULTY,
+    /* nonce        */ 0,
+    /* timestamp    */ new Date('2022-01-01').getTime()
 );
