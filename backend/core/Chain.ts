@@ -15,6 +15,16 @@ export class Chain {
     private pendingTransactions: Readonly<Transaction>[] = [];
 
     /**
+     * Miner wallet address to collect block rewards.
+     */
+    private readonly minerAddress: string;
+
+    constructor(minerAddress: string) {
+        // set miner wallet address
+        this.minerAddress = minerAddress;
+    }
+
+    /**
      * Size of the chain.
      */
     get size(): number {
