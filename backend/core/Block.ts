@@ -129,7 +129,7 @@ export class Block {
 export const GENESIS_BLOCK: Readonly<Block> = new Block(
     0,
     '',
-    [new Transaction(ROOT_ADDRESS, 'miner', 100)],
+    [],
     ROOT_ADDRESS,
     BLOCK_DIFFICULTY,
     0,
