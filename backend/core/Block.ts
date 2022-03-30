@@ -99,18 +99,6 @@ export class Block {
     }
 
     /**
-     * Flag if block has valid proof.
-     *
-     * Proof is valid if the hash of the block starts with the required number of zeros.
-     */
-    get hasValidProof(): boolean {
-        // define proof string based on zeros
-        const prefix = '0'.repeat(this.difficulty);
-
-        return this.hash.startsWith(prefix);
-    }
-
-    /**
      * Calculate the hash of the block.
      */
     calculateHash(): string {
@@ -122,21 +110,6 @@ export class Block {
                 this.timestamp +
                 this.transactions.map((t) => t.hash).join('')
         );
-    }
-
-    /**
-     * Try to guess the nonce of the block until it finds
-     * a valid hash that satisfies the difficulty level.
-     */
-    proofOfWork(): void {
-        // loop until valid proof is found
-        while (!this.hasValidProof) {
-            // increment nonce
-            this.nonce++;
-
-            // recalculate hash
-            this.hash = this.calculateHash();
-        }
     }
 }
 

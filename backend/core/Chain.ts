@@ -93,12 +93,33 @@ export class Chain {
         const block = this.nextBlock;
 
         // compute proof-of-work mechanism
-        block.proofOfWork();
+        this.computeProofOfWork(block);
 
         // add block to chain
         this.addBlock(block);
 
         // log block
         console.log(`Mined block #${block.height}`);
+    }
+
+    // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Try to guess the nonce of the block until it finds
+     * a valid hash that satisfies the difficulty level.
+     */
+    computeProofOfWork(block: Block): void {
+        // define proof string based on zeros
+        // e.g. if difficulty is 3, then proof string will be '000'
+        const prefix = '0'.repeat(block.difficulty);
+
+        // loop until valid proof is found
+        while (!block.hash.startsWith(prefix)) {
+            // increment nonce
+            block.nonce++;
+
+            // recalculate hash
+            block.hash = block.calculateHash();
+        }
     }
 }
