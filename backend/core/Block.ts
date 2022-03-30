@@ -92,6 +92,17 @@ export class Block {
     }
 
     /**
+     * Total block reward for the block.
+     *
+     * Miners receive two types of rewards for mining:
+     *  1) new coins created with each new block
+     *  2) transaction fees from all the transactions included in the block.
+     */
+    get reward(): number {
+        return this.transactionFees + this.miningReward;
+    }
+
+    /**
      * Flag if block has valid proof.
      *
      * Proof is valid if the hash of the block starts with the required number of zeros.
