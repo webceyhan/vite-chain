@@ -36,6 +36,11 @@ export class Block {
         public transactions: Readonly<Transaction>[],
 
         /**
+         * Miner address to collect block rewards.
+         */
+        public miner: string = ROOT_ADDRESS,
+
+        /**
          * The POW difficulty level of the block.
          */
         public difficulty: number = 0,
@@ -125,6 +130,7 @@ export const GENESIS_BLOCK: Readonly<Block> = new Block(
     0,
     '',
     [new Transaction(ROOT_ADDRESS, 'miner', 100)],
+    ROOT_ADDRESS,
     BLOCK_DIFFICULTY,
     0,
     1545184500
