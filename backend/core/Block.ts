@@ -9,9 +9,9 @@ import { createHash } from '../utils';
 
 export class Block {
     /**
-     * Cached hash of the block.
+     * The unique hash string representing the block.
      */
-    private cachedHash?: string;
+    public hash: string;
 
     constructor(
         /**
@@ -49,13 +49,9 @@ export class Block {
          * The timestamp on which the block was created.
          */
         public timestamp: number = Date.now()
-    ) {}
-
-    /**
-     * The unique hash string representing the block.
-     */
-    get hash(): string {
-        return (this.cachedHash ??= this.calculateHash());
+    ) {
+        // set calculated hash
+        this.hash = this.calculateHash();
     }
 
     /**
@@ -138,9 +134,8 @@ export class Block {
             // increment nonce
             this.nonce++;
 
-            // clear cached hash to force recalculation
-            // of hash value with new nonce on next call
-            this.cachedHash = undefined;
+            // recalculate hash
+            this.hash = this.calculateHash();
         }
     }
 }

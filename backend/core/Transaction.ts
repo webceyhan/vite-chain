@@ -5,9 +5,9 @@ export type TransactionType = 'coinbase' | 'transfer';
 
 export class Transaction {
     /**
-     * Cached hash of the transaction.
+     * Unique hash string representing the transaction.
      */
-    private cachedHash?: string;
+    public hash: string;
 
     constructor(
         /**
@@ -29,13 +29,9 @@ export class Transaction {
          * Timestamp on which the transaction was created.
          */
         public timestamp: number = Date.now()
-    ) {}
-
-    /**
-     * Unique hash string representing the transaction.
-     */
-    get hash(): string {
-        return (this.cachedHash ??= this.calculateHash());
+    ) {
+        // set calculated hash
+        this.hash = this.calculateHash();
     }
 
     /**
