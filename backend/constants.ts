@@ -19,7 +19,7 @@ export const BLOCK_DIFFICULTY = 1;
  * For example, if BLOCK_TIME_INTERVAL is 60,
  * then a block will be mined every 60 seconds (1 minute).
  */
-export const BLOCK_TIME_INTERVAL = 10;
+export const BLOCK_TIME_INTERVAL = 30;
 
 /**
  * Initial mining reward per block.
