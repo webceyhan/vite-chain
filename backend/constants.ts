@@ -1,4 +1,9 @@
 /**
+ * Crypto currency coin symbol.
+ */
+export const COIN_SYMBOL = 'VTC';
+
+/**
  * Address of the coinbase transaction.
  */
 export const ROOT_ADDRESS = 'root';
