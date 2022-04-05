@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "dev:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/main.ts",
+    "test:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/test.ts",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
