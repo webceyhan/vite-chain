@@ -8,8 +8,22 @@ import { Block, GENESIS_BLOCK } from './Block';
 import { Transaction } from './Transaction';
 import { CoinPool } from './Coin';
 import { delay } from '../utils';
+import EventEmitter from 'events';
+
+export type ChainEvent =
+    | 'chain:updated'
+    | 'block:mined'
+    | 'block:added'
+    | 'supply:changed'
+    | 'transaction:added'
+    | 'transaction:discarded';
 
 export class Chain {
+    /**
+     * Miner wallet address to collect block rewards.
+     */
+    public readonly minerAddress: string;
+
     /**
      * The chain of blocks starting from the genesis block.
      */
@@ -32,9 +46,9 @@ export class Chain {
     private pendingCoinPool = new CoinPool();
 
     /**
-     * Miner wallet address to collect block rewards.
+     * Internal event emitter.
      */
-    public readonly minerAddress: string;
+    private eventEmitter = new EventEmitter();
 
     constructor(minerAddress: string) {
         // set miner wallet address
@@ -119,8 +133,12 @@ export class Chain {
 
             // add to the pending transactions
             this.pendingTransactions.push(tx);
+
+            // emit transaction:added event
+            this.eventEmitter.emit('transaction:added', tx);
         } catch (error) {
-            // ignore error
+            // emit transaction:discarded event
+            this.eventEmitter.emit('transaction:discarded', tx, error);
         }
     }
 
@@ -139,6 +157,9 @@ export class Chain {
 
         // reset pending coin pool to the current coin pool
         this.pendingCoinPool = this.coinPool.clone();
+
+        // emit block:added event
+        this.eventEmitter.emit('block:added', block);
     }
 
     // MINING //////////////////////////////////////////////////////////////////////////////////////
@@ -170,11 +191,11 @@ export class Chain {
         // compute proof-of-work mechanism
         this.computeProofOfWork(block);
 
+        // emit block:mined event
+        this.eventEmitter.emit('block:mined', block);
+
         // add block to chain
         this.addBlock(block);
-
-        // log block
-        console.log(`Mined block #${block.height}`);
     }
 
     /**
@@ -199,7 +220,11 @@ export class Chain {
      * It is responsible for updating the coin pool (UTXOs)
      */
     private processTransactions(block: Block): void {
+        // update coin pool with the block transactions
         block.transactions.map((tx) => this.coinPool.transact(tx));
+
+        // emit supply:changed event
+        this.eventEmitter.emit('supply:changed', this.coinPool.total);
     }
 
     // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
@@ -221,5 +246,25 @@ export class Chain {
             // recalculate hash
             block.hash = block.calculateHash();
         }
+    }
+
+    // EVENT EMITTER METHODS ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Emit chain event.
+     */
+    emit(eventName: ChainEvent, ...args: any[]): void {
+        // emit provided event with arguments
+        this.eventEmitter.emit(eventName, ...args);
+
+        // emit chain:updated event
+        this.eventEmitter.emit('chain:updated', this);
+    }
+
+    /**
+     * Add chain event listener.
+     */
+    on(eventName: ChainEvent, listener: (...args: any[]) => void): void {
+        this.eventEmitter.on(eventName, listener);
     }
 }
