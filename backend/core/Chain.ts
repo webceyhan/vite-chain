@@ -21,6 +21,12 @@ export class Chain {
     private pendingTransactions: Readonly<Transaction>[] = [];
 
     /**
+     * Pending pool of coins (UTXOs) corresponding to the addresses in the chain.
+     * This is used to check if a pending transaction is valid (has sufficient funds).
+     */
+    private pendingCoinPool = new CoinPool();
+
+    /**
      * Miner wallet address to collect block rewards.
      */
     private readonly minerAddress: string;
@@ -71,7 +77,15 @@ export class Chain {
      */
     addTransaction(tx: Transaction): void {
         // todo: validate transaction
-        this.pendingTransactions.push(tx);
+        try {
+            // try updating the pending coin pool
+            this.pendingCoinPool.transact(tx);
+
+            // add to the pending transactions
+            this.pendingTransactions.push(tx);
+        } catch (error) {
+            // ignore error
+        }
     }
 
     /**
@@ -86,6 +100,9 @@ export class Chain {
 
         // reset pending transactions
         this.pendingTransactions = [];
+
+        // reset pending coin pool to the current coin pool
+        this.pendingCoinPool = this.coinPool.clone();
     }
 
     // MINING //////////////////////////////////////////////////////////////////////////////////////
