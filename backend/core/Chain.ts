@@ -34,7 +34,7 @@ export class Chain {
     /**
      * Miner wallet address to collect block rewards.
      */
-    private readonly minerAddress: string;
+    public readonly minerAddress: string;
 
     constructor(minerAddress: string) {
         // set miner wallet address
