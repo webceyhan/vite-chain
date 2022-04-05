@@ -224,7 +224,7 @@ export class Chain {
         block.transactions.map((tx) => this.coinPool.transact(tx));
 
         // emit supply:changed event
-        this.eventEmitter.emit('supply:changed', this.coinPool.total);
+        this.eventEmitter.emit('supply:changed', this.coinPool);
     }
 
     // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
