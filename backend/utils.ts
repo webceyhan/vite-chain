@@ -3,6 +3,12 @@ import bs58check from 'bs58check';
 import { ec } from 'elliptic';
 
 /**
+ * Compare two objects in string comparison.
+ */
+export const compare = (a: any, b: any) =>
+    JSON.stringify(a) === JSON.stringify(b);
+
+/**
  * Get delay in seconds.
  */
 export const delay = (second: number) =>
