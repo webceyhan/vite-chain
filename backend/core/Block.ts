@@ -62,8 +62,15 @@ export class Block {
      * between the transaction’s inputs and outputs. The winning bitcoin miner gets
      * to “keep the change” on the transactions included in the winning block.
      */
-    get transactionFees(): number {
+    get totalFees(): number {
         return this.transactions.reduce((sum, tx) => sum + tx.fee, 0);
+    }
+
+    /**
+     * Sum of all transaction amounts in the block.
+     */
+    get totalAmount(): number {
+        return this.transactions.reduce((sum, tx) => sum + tx.amount, 0);
     }
 
     /**
@@ -94,12 +101,12 @@ export class Block {
      *  2) transaction fees from all the transactions included in the block.
      */
     get reward(): number {
-        return this.transactionFees + this.miningReward;
+        return this.totalFees + this.miningReward;
     }
 
     /**
      * Miner address who created the block.
-     * 
+     *
      * The miner’s address is used to collect the block rewards.
      * It is also used as recipient address for the coinbase transaction.
      */
