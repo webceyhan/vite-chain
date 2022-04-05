@@ -5,7 +5,7 @@ import {
     BLOCK_REWARD_INTERVAL,
 } from '../constants';
 import { Transaction } from './Transaction';
-import { createHash } from '../utils';
+import { sha256 } from '../utils';
 
 export class Block {
     /**
@@ -119,7 +119,7 @@ export class Block {
      * Calculate the hash of the block.
      */
     calculateHash(): string {
-        return createHash(
+        return sha256(
             this.height +
                 this.parentHash +
                 this.difficulty +

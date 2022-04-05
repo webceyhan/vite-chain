@@ -1,9 +1,9 @@
 import { ROOT_ADDRESS, TRANSACTION_COMMISION } from '../constants';
-import { createHash } from '../utils';
+import { sha256 } from '../utils';
 
 /**
  * The type of a transaction.
- * 
+ *
  * There are three types of transactions:
  * - `coinbase`: a transaction that sends coins to the network.
  * - `transfer`: a transaction that sends coins from one account to another.
@@ -79,6 +79,6 @@ export class Transaction {
      * Calculate the hash of the transaction.
      */
     calculateHash(): string {
-        return createHash(this.from + this.to + this.amount + this.timestamp);
+        return sha256(this.from + this.to + this.amount + this.timestamp);
     }
 }

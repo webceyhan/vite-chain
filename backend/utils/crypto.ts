@@ -1,33 +1,29 @@
-import { createHash as _createHash } from 'crypto';
 import bs58check from 'bs58check';
+import { createHash } from 'crypto';
 import { ec } from 'elliptic';
 
-/**
- * Compare two objects in string comparison.
- */
-export const compare = (a: any, b: any) =>
-    JSON.stringify(a) === JSON.stringify(b);
-
-/**
- * Get a random number between min and max.
- */
-export const random = (max: number, min: number = 0) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
-
-/**
- * Get delay in seconds.
- */
-export const delay = (second: number) =>
-    new Promise<void>((resolve) => setTimeout(resolve, second * 1000));
+// HASHING HELPERS /////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Generate a sha256 hash from a string.
  * Result is a hexadecimal string with length 64.
  */
-export const createHash = (str: string) =>
-    _createHash('sha256').update(str).digest('hex');
+export const sha256 = (value: any) =>
+    createHash('sha256').update(value).digest('hex');
+
+/**
+ * Generate a ripeMD160 hash from a string.
+ * Result is a hexadecimal string with length 40.
+ */
+export const ripeMD160 = (value: any) =>
+    createHash('ripemd160').update(value).digest('hex');
 
 // ENCODING HELPERS ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Convert a hexadecimal string to buffer.
+ */
+export const hexToBuffer = (hex: string): Buffer => Buffer.from(hex, 'hex');
 
 /**
  * Compress a hexadecimal string with base58Check encoding.
@@ -36,7 +32,7 @@ export const createHash = (str: string) =>
  * Bitcoin address is a base58Check encoded string with length 34.
  */
 export const encodeBase58Check = (data: string): string =>
-    bs58check.encode(Buffer.from(data, 'hex'));
+    bs58check.encode(hexToBuffer(data));
 
 /**
  * Decompress a base58Check decoded string to hexadecimal string.
