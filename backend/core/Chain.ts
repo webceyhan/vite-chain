@@ -1,6 +1,7 @@
 import { BLOCK_TIME_INTERVAL, ROOT_ADDRESS } from '../constants';
 import { Block, GENESIS_BLOCK } from './Block';
 import { Transaction } from './Transaction';
+import { CoinPool } from './Coin';
 import { delay } from '../utils';
 
 export class Chain {
@@ -8,6 +9,11 @@ export class Chain {
      * The chain of blocks starting from the genesis block.
      */
     private blocks: Readonly<Block>[] = [GENESIS_BLOCK];
+
+    /**
+     * Pool of coins (UTXOs) corresponding to the addresses in the chain.
+     */
+    private readonly coinPool = new CoinPool();
 
     /**
      * Pending transactions to be added to the next block.
@@ -75,6 +81,9 @@ export class Chain {
         // todo: validate block
         this.blocks.push(block);
 
+        // process transactions in the block
+        this.processTransactions(block);
+
         // reset pending transactions
         this.pendingTransactions = [];
     }
@@ -128,6 +137,16 @@ export class Chain {
 
         // add to the beginning of the block
         block.transactions.unshift(coinbaseTx);
+    }
+
+    /**
+     * Process transactions in the block.
+     *
+     * This method is called after a block is added to the chain.
+     * It is responsible for updating the coin pool (UTXOs)
+     */
+    private processTransactions(block: Block): void {
+        block.transactions.map((tx) => this.coinPool.transact(tx));
     }
 
     // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
