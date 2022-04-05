@@ -1,4 +1,4 @@
-import { BLOCK_TIME_INTERVAL } from '../constants';
+import { BLOCK_TIME_INTERVAL, ROOT_ADDRESS } from '../constants';
 import { Block, GENESIS_BLOCK } from './Block';
 import { Transaction } from './Transaction';
 import { delay } from '../utils';
@@ -103,6 +103,9 @@ export class Chain {
         // get next block to mine
         const block = this.nextBlock;
 
+        // add coinbase transaction
+        this.addCoinbaseTransaction(block);
+
         // compute proof-of-work mechanism
         this.computeProofOfWork(block);
 
@@ -111,6 +114,21 @@ export class Chain {
 
         // log block
         console.log(`Mined block #${block.height}`);
+    }
+
+    /**
+     * Add coinbase transaction to the block.
+     */
+    private addCoinbaseTransaction(block: Block): void {
+        // create coinbase transaction
+        const coinbaseTx = new Transaction(
+            ROOT_ADDRESS,
+            this.minerAddress,
+            block.reward
+        );
+
+        // add to the beginning of the block
+        block.transactions.unshift(coinbaseTx);
     }
 
     // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
