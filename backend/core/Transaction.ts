@@ -1,6 +1,14 @@
 import { ROOT_ADDRESS, TRANSACTION_COMMISION } from '../constants';
 import { createHash } from '../utils';
 
+/**
+ * The type of a transaction.
+ * 
+ * There are three types of transactions:
+ * - `coinbase`: a transaction that sends coins to the network.
+ * - `transfer`: a transaction that sends coins from one account to another.
+ * - `vote`: a transaction that votes for a candidate. (not implemented yet!)
+ */
 export type TransactionType = 'coinbase' | 'transfer';
 
 export class Transaction {
