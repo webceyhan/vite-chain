@@ -56,7 +56,6 @@ export class Chain {
             this.size,
             this.lastBlock.hash,
             this.pendingTransactions,
-            this.minerAddress,
             this.lastBlock.difficulty
         );
     }

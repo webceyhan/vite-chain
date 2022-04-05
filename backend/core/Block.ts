@@ -1,5 +1,4 @@
 import {
-    ROOT_ADDRESS,
     BLOCK_DIFFICULTY,
     BLOCK_REWARD,
     BLOCK_REWARD_INTERVAL,
@@ -34,11 +33,6 @@ export class Block {
          * The list of transactions that are included in the block.
          */
         public transactions: Readonly<Transaction>[],
-
-        /**
-         * Miner address to collect block rewards.
-         */
-        public miner: string = ROOT_ADDRESS,
 
         /**
          * The POW difficulty level of the block.
@@ -104,6 +98,16 @@ export class Block {
     }
 
     /**
+     * Miner address who created the block.
+     * 
+     * The miner’s address is used to collect the block rewards.
+     * It is also used as recipient address for the coinbase transaction.
+     */
+    get miner(): string {
+        return this.transactions[0]?.to;
+    }
+
+    /**
      * Calculate the hash of the block.
      */
     calculateHash(): string {
@@ -130,7 +134,6 @@ export const GENESIS_BLOCK: Readonly<Block> = new Block(
     /* height       */ 0,
     /* parentHash   */ '0',
     /* transactions */ [],
-    /* miner        */ ROOT_ADDRESS,
     /* difficulty   */ BLOCK_DIFFICULTY,
     /* nonce        */ 0,
     /* timestamp    */ new Date('2022-01-01').getTime()
