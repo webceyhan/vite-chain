@@ -123,6 +123,13 @@ export class Chain {
     }
 
     /**
+     * Get balance of the given address.
+     */
+    balanceOf(address: string): number {
+        return this.coinPool.getBalance(address);
+    }
+
+    /**
      * Add new transaction to the blockchain.
      */
     addTransaction(tx: Transaction): void {
