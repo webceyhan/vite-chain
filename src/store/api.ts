@@ -1,4 +1,4 @@
-const API_URL = 'http://0.0.0.0:8080/api';
+const API_URL = 'http://localhost:8080/api';
 
 export interface Chain {
     totalBlocks: number;
