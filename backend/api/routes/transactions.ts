@@ -7,12 +7,20 @@ export default (chain: Chain) => {
 
     // get all transactions
     router.get('/', (req, res) => {
-        // check if block query provided
+        // get by block height
         if (req.query.block) {
-            // fetch specific block transactions
             const height = +req.query.block;
-            const block = chain.blocks[height];
-            res.json(block?.transactions);
+            const block = chain.findBlockByHeight(height);
+
+            return res.json(block.transactions);
+        }
+
+        // get by address
+        if (req.query.address) {
+            const address = req.query.address as string;
+            const transactions = chain.findTransactionsByAddress(address);
+
+            return res.json(transactions);
         }
 
         // return all transactions from last block
@@ -22,7 +30,8 @@ export default (chain: Chain) => {
     // get transaction by hash
     router.get('/:hash', (req, res) => {
         const hash = req.params.hash;
-        res.json(chain.transactionOf(hash));
+
+        res.json(chain.findTransaction(hash));
     });
 
     return router;

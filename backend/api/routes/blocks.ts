@@ -13,7 +13,7 @@ export default (chain: Chain) => {
     // get block by height
     router.get('/:height', (req, res) => {
         const height = +req.params.height;
-        res.json(chain.blocks[height]);
+        res.json(chain.findBlockByHeight(height));
     });
 
     return router;
