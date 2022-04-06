@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Chain } from '../../core';
+import { serializeTransaction } from '../../serialization';
 
 export default (chain: Chain) => {
     // define router
@@ -17,8 +18,9 @@ export default (chain: Chain) => {
 
                 // try to find block by height
                 const block = chain.findBlockByHeight(height);
+                const txs = block.transactions.map(serializeTransaction);
 
-                return res.json(block.transactions);
+                return res.json(txs);
             }
 
             // get by address
@@ -28,12 +30,13 @@ export default (chain: Chain) => {
 
                 // try to find all transactions by address
                 const transactions = chain.findTransactionsByAddress(address);
+                const txs = transactions.map(serializeTransaction);
 
-                return res.json(transactions);
+                return res.json(txs);
             }
 
             // return all transactions from last block
-            res.json(chain.lastBlock.transactions);
+            res.json(chain.lastBlock.transactions.map(serializeTransaction));
         } catch (error) {
             res.status(404).json((error as Error).message);
         }
@@ -48,7 +51,8 @@ export default (chain: Chain) => {
 
         try {
             // try to find transaction by hash
-            res.json(chain.findTransaction(hash));
+            const tx = chain.findTransaction(hash);
+            res.json(serializeTransaction(tx));
         } catch (error) {
             res.status(404).json((error as Error).message);
         }

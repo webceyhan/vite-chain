@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Chain } from '../../core';
+import { serializeTransaction } from '../../serialization';
 
 export default (chain: Chain) => {
     // define router
@@ -24,7 +25,9 @@ export default (chain: Chain) => {
             res.json({
                 address,
                 balance: chain.findBalance(address),
-                transactions: chain.findTransactionsByAddress(address),
+                transactions: chain
+                    .findTransactionsByAddress(address)
+                    .map(serializeTransaction),
             });
         } catch (error) {
             res.status(404).json((error as Error).message);
