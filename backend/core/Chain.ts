@@ -303,6 +303,13 @@ export class Chain {
         this.eventEmitter.on(eventName, listener);
     }
 
+    /**
+     * Remove chain event listener.
+     */
+    off(eventName: ChainEvent, listener: (...args: any[]) => void): void {
+        this.eventEmitter.off(eventName, listener);
+    }
+
     // QUERY METHODS ///////////////////////////////////////////////////////////////////////////////
 
     /**
