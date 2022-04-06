@@ -137,20 +137,6 @@ export class Chain {
     }
 
     /**
-     * Get balance of the given address.
-     */
-    balanceOf(address: string): number {
-        return this.coinPool.getBalance(address);
-    }
-
-    /**
-     * Get transaction of the given hash.
-     */
-    transactionOf(hash: string): Readonly<Transaction> | undefined {
-        return this.transactionMap.get(hash);
-    }
-
-    /**
      * Add new transaction to the blockchain.
      */
     addTransaction(tx: Transaction): void {
@@ -301,5 +287,58 @@ export class Chain {
      */
     on(eventName: ChainEvent, listener: (...args: any[]) => void): void {
         this.eventEmitter.on(eventName, listener);
+    }
+
+    // QUERY METHODS ///////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Find block by hash.
+     */
+    findBlock(hash: string): Block | never {
+        const block = this.blocks.find((block) => block.hash === hash);
+
+        if (block) return block; // return if found or throw error
+        throw new Error(`Block with hash ${hash} not found.`);
+    }
+
+    /**
+     * Find block by height.
+     */
+    findBlockByHeight(height: number): Block | never {
+        // return if found or throw error
+        if (this.blocks[height]) return this.blocks[height];
+        throw new Error(`Block with height ${height} not found.`);
+    }
+
+    /**
+     * Find transaction by hash.
+     */
+    findTransaction(hash: string): Transaction | never {
+        const tx = this.transactionMap.get(hash);
+
+        if (tx) return tx; // return if found or throw error
+        throw new Error(`Transaction with hash ${hash} not found.`);
+    }
+
+    /**
+     * Find all transaction by address.
+     */
+    findTransactionsByAddress(address: string): Transaction[] {
+        const transactions: Transaction[] = [];
+
+        // loop through all transactions
+        this.transactionMap.forEach((tx) => {
+            if (tx.from === address) transactions.push(tx);
+            if (tx.to === address) transactions.push(tx);
+        });
+
+        return transactions;
+    }
+
+    /**
+     * Find balance of the given address.
+     */
+    findBalance(address: string): number {
+        return this.coinPool.getBalance(address);
     }
 }
