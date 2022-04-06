@@ -10,7 +10,12 @@ export default (chain: Chain) => {
      * Get all addresses.
      */
     router.get('/', (req, res) => {
-        res.json(chain.addresses);
+        res.json(
+            chain.addresses.map((address) => ({
+                address,
+                balance: chain.findBalance(address),
+            }))
+        );
     });
 
     /**

@@ -36,7 +36,6 @@ export interface Wallet {
     balance: number;
     transactions: Transaction[];
     txCount?: number; // placeholder
-    timestamp: number;
 }
 
 const fetchApi = async <T = any>(path: string, q = {}, params = {}) => {
