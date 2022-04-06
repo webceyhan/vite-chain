@@ -17,6 +17,12 @@ export class Transaction {
      */
     public hash: string;
 
+    /**
+     * It’s a unique number that tracks the position
+     * of every block in the entire blockchain.
+     */
+    public blockHeight: number = 0;
+
     constructor(
         /**
          * Sender address of the transaction.

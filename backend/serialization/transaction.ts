@@ -1,12 +1,13 @@
 import { Transaction } from '../core';
 
 type Keys =
+    | 'hash'
     | 'from'
     | 'to'
     | 'amount'
     | 'fee'
     | 'signature'
-    | 'hash'
+    | 'blockHeight'
     | 'type'
     | 'timestamp';
 
@@ -16,12 +17,13 @@ export type TransactionJSON = Pick<Transaction, Keys>;
  * Serialize transaction to JSON.
  */
 export const serializeTransaction = (tx: Transaction): TransactionJSON => ({
+    hash: tx.hash,
     from: tx.from,
     to: tx.to,
     amount: tx.amount,
     fee: tx.fee,
     signature: tx.signature,
-    hash: tx.hash,
+    blockHeight: tx.blockHeight,
     type: tx.type,
     timestamp: tx.timestamp,
 });
