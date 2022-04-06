@@ -11,6 +11,6 @@ defineProps({
 <template>
     <span class="currency">
         {{ formatCurrency(+value) }}
-        <small>VT</small>
+        <small>VTC</small>
     </span>
 </template>
