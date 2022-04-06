@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { Chain } from '../core';
 import { PORT, HOSTNAME } from '../constants';
 import blocksRouter from './routes/blocks';
+import transactionsRouter from './routes/transactions';
 
 export const createAPI = (chain: Chain) => {
     // create express app
@@ -21,6 +22,7 @@ export const createAPI = (chain: Chain) => {
 
     // define routes
     app.use('/api/blocks', blocksRouter(chain));
+    app.use('/api/transactions', transactionsRouter(chain));
 
     // start listening
     server.listen(PORT, HOSTNAME, () =>
