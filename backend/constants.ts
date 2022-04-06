@@ -39,7 +39,7 @@ export const BLOCK_REWARD = 50;
  * In Bitcoin, original block reward interval was 210000
  * around every 4 years with a 10 minute block interval
  */
-export const BLOCK_REWARD_INTERVAL = 10;
+export const BLOCK_REWARD_INTERVAL = 100;
 
 /**
  * Commision per transaction to calculate fee
