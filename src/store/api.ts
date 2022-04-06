@@ -12,7 +12,7 @@ export interface Transaction {
     hash: string;
     from: string;
     to: string;
-    value: number;
+    amount: number;
     fee: number;
     timestamp: number;
 }
