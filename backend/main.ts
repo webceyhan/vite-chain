@@ -1,5 +1,6 @@
 import { Chain, Wallet } from './core';
 import { createLogger } from './logger';
+import { createAPI } from './api';
 
 // create miner wallet
 export const miner = new Wallet();
@@ -9,5 +10,8 @@ export const chain = new Chain(miner.address);
 
 // create logger for chain events
 export const logger = createLogger(chain);
+
+// create API server
+export const api = createAPI(chain);
 
 chain.startMiningLoop();

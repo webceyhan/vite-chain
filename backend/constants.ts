@@ -1,3 +1,5 @@
+// BLOCKCHAIN //////////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Crypto currency coin symbol.
  */
@@ -44,3 +46,15 @@ export const BLOCK_REWARD_INTERVAL = 10;
  * multiplied by the amount of transaction.
  */
 export const TRANSACTION_COMMISION = 0.01;
+
+// NETWORK /////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Network port for API server.
+ */
+export const PORT = (process.env.PORT as any) || 8080;
+
+/**
+ * Default hostname for all network requests.
+ */
+export const HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
