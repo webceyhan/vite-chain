@@ -30,6 +30,13 @@ export class Chain {
     public blocks: Readonly<Block>[] = [GENESIS_BLOCK];
 
     /**
+     * Map of transactions by their hash.
+     *
+     * This map is used to keep track of all transactions in the blockchain.
+     */
+    private transactionMap: Map<string, Readonly<Transaction>> = new Map();
+
+    /**
      * Pool of coins (UTXOs) corresponding to the addresses in the chain.
      */
     private readonly coinPool = new CoinPool();
@@ -60,6 +67,13 @@ export class Chain {
      */
     get size(): number {
         return this.blocks.length;
+    }
+
+    /**
+     * Get size of the transactions.
+     */
+    get transactionSize(): number {
+        return this.transactionMap.size;
     }
 
     /**
@@ -127,6 +141,13 @@ export class Chain {
      */
     balanceOf(address: string): number {
         return this.coinPool.getBalance(address);
+    }
+
+    /**
+     * Get transaction of the given hash.
+     */
+    transactionOf(hash: string): Readonly<Transaction> | undefined {
+        return this.transactionMap.get(hash);
     }
 
     /**
@@ -224,11 +245,17 @@ export class Chain {
      * Process transactions in the block.
      *
      * This method is called after a block is added to the chain.
-     * It is responsible for updating the coin pool (UTXOs)
+     * It is responsible for updating the coin pool (UTXOs) and the transaction map.
      */
     private processTransactions(block: Block): void {
-        // update coin pool with the block transactions
-        block.transactions.map((tx) => this.coinPool.transact(tx));
+        // loop through all transactions
+        block.transactions.map((tx) => {
+            // update coin pool
+            this.coinPool.transact(tx);
+
+            // add to the transaction map
+            this.transactionMap.set(tx.hash, tx);
+        });
 
         // emit supply:changed event
         this.eventEmitter.emit('supply:changed', this.coinPool);
