@@ -70,10 +70,17 @@ export class Chain {
     }
 
     /**
-     * Get size of the transactions.
+     * Size of the transactions.
      */
     get transactionSize(): number {
         return this.transactionMap.size;
+    }
+
+    /**
+     * Size of the addresses holding coins in the chain.
+     */
+    get addressSize(): number {
+        return this.coinPool.size;
     }
 
     /**

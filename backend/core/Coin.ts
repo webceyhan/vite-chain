@@ -48,6 +48,13 @@ export class CoinPool {
     }
 
     /**
+     * Size of the pool.
+     */
+    get size(): number {
+        return this.pool.size;
+    }
+
+    /**
      * An array of coin keys.
      */
     get keys(): string[] {
