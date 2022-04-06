@@ -163,10 +163,10 @@ export class Chain {
             this.pendingTransactions.push(tx);
 
             // emit transaction:added event
-            this.eventEmitter.emit('transaction:added', tx);
+            this.emit('transaction:added', tx);
         } catch (error) {
             // emit transaction:discarded event
-            this.eventEmitter.emit('transaction:discarded', tx, error);
+            this.emit('transaction:discarded', tx, error);
         }
     }
 
@@ -181,7 +181,7 @@ export class Chain {
         this.processTransactions(block);
 
         // emit block:added event
-        this.eventEmitter.emit('block:added', block);
+        this.emit('block:added', block);
     }
 
     // MINING //////////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +214,7 @@ export class Chain {
         this.computeProofOfWork(block);
 
         // emit block:mined event
-        this.eventEmitter.emit('block:mined', block);
+        this.emit('block:mined', block);
 
         // add block to chain
         this.addBlock(block);
@@ -259,7 +259,7 @@ export class Chain {
         this.pendingCoinPool = this.coinPool.clone();
 
         // emit supply:changed event
-        this.eventEmitter.emit('supply:changed', this.coinPool);
+        this.emit('supply:changed', this.coinPool);
     }
 
     // CONSENSUS ///////////////////////////////////////////////////////////////////////////////////
