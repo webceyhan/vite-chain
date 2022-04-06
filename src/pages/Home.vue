@@ -3,8 +3,16 @@
 import { useTickers } from '../store/tickers';
 import { onMounted, onUnmounted } from 'vue';
 import ChainStats from '../components/ChainStats.vue';
+import BlockList from '../components/BlockList.vue';
+import TransactionList from '../components/TransactionList.vue';
 
-const { connect, disconnect, chain } = useTickers();
+const {
+  connect,
+  disconnect,
+  chain,
+  latestBlocks,
+  latestTransactions
+} = useTickers();
 
 onMounted(() => connect());
 onUnmounted(() => disconnect());
@@ -20,10 +28,14 @@ onUnmounted(() => disconnect());
       </div>
 
       <!-- blocks -->
-      <div class="col-12 col-lg-5">blocks</div>
+      <div class="col-12 col-lg-5">
+        <BlockList :blocks="latestBlocks" />
+      </div>
 
       <!-- transactions -->
-      <div class="col-12 col-lg-7">transactions</div>
+      <div class="col-12 col-lg-7">
+        <TransactionList :transactions="latestTransactions" />
+      </div>
     </div>
   </section>
 </template>
