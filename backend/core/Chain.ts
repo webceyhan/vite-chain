@@ -180,12 +180,6 @@ export class Chain {
         // process transactions in the block
         this.processTransactions(block);
 
-        // reset pending transactions
-        this.pendingTransactions = [];
-
-        // reset pending coin pool to the current coin pool
-        this.pendingCoinPool = this.coinPool.clone();
-
         // emit block:added event
         this.eventEmitter.emit('block:added', block);
     }
@@ -245,7 +239,8 @@ export class Chain {
      * Process transactions in the block.
      *
      * This method is called after a block is added to the chain.
-     * It is responsible for updating the coin pool (UTXOs) and the transaction map.
+     * It is responsible for updating the coin pool (UTXOs) and transaction map.
+     * And also for removing transactions from the pending pools.
      */
     private processTransactions(block: Block): void {
         // loop through all transactions
@@ -256,6 +251,12 @@ export class Chain {
             // add to the transaction map
             this.transactionMap.set(tx.hash, tx);
         });
+
+        // reset pending transactions
+        this.pendingTransactions = [];
+
+        // reset pending coin pool to the current coin pool
+        this.pendingCoinPool = this.coinPool.clone();
 
         // emit supply:changed event
         this.eventEmitter.emit('supply:changed', this.coinPool);
