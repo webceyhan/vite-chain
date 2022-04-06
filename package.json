@@ -21,7 +21,8 @@
     "express": "^4.17.3",
     "table": "^6.8.0",
     "timeago.js": "^4.0.2",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@types/bs58check": "^2.1.0",
