@@ -48,6 +48,13 @@ export class CoinPool {
     }
 
     /**
+     * An array of coin keys.
+     */
+    get keys(): string[] {
+        return Array.from(this.pool.keys());
+    }
+
+    /**
      * An array of coins objects.
      */
     get coins(): Coin[] {

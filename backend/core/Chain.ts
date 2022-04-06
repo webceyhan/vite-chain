@@ -106,6 +106,13 @@ export class Chain {
     }
 
     /**
+     * Known wallet addresses in the chain.
+     */
+    get addresses(): string[] {
+        return this.coinPool.keys;
+    }
+
+    /**
      * Current block difficulty.
      */
     get difficulty(): number {
