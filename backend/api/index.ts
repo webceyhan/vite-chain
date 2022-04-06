@@ -1,9 +1,10 @@
-import { PORT, HOSTNAME } from '../constants';
 import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { Chain } from '../core';
+import { PORT, HOSTNAME } from '../constants';
+import blocksRouter from './routes/blocks';
 
 export const createAPI = (chain: Chain) => {
     // create express app
@@ -17,6 +18,9 @@ export const createAPI = (chain: Chain) => {
 
     // enable json body parser
     app.use(bodyParser.json());
+
+    // define routes
+    app.use('/api/blocks', blocksRouter(chain));
 
     // start listening
     server.listen(PORT, HOSTNAME, () =>

@@ -27,7 +27,7 @@ export class Chain {
     /**
      * The chain of blocks starting from the genesis block.
      */
-    private blocks: Readonly<Block>[] = [GENESIS_BLOCK];
+    public blocks: Readonly<Block>[] = [GENESIS_BLOCK];
 
     /**
      * Pool of coins (UTXOs) corresponding to the addresses in the chain.
