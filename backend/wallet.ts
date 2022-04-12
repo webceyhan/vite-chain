@@ -1,9 +1,12 @@
 import {
     createKeyPair,
+    decodeAddress,
     decodeWiF,
     encodeAddress,
     encodeWiF,
+    isAddress,
     keyFromPrivate,
+    keyFromPublic,
 } from './utils';
 import { Transaction } from './core';
 
@@ -52,10 +55,17 @@ export class Wallet {
     }
 
     /**
-     * Sign a data with the wallet's private key.
+     * Sign a data with the private key.
      */
     sign(data: string): string {
         return this.keyPair.sign(data).toDER('hex');
+    }
+
+    /**
+     * Verify a data and its signature with the public key.
+     */
+    verify(data: string, signature: any): boolean {
+        return this.keyPair.verify(data, signature);
     }
 
     /**
@@ -87,5 +97,16 @@ export class Wallet {
      */
     static fromWiF(wif: string): Wallet {
         return Wallet.fromKey(decodeWiF(wif));
+    }
+
+    /**
+     * Verify a data and its signature with a public key
+     * (or with an address which is derived from the public key).
+     */
+    static verify(data: string, signature: any, key: string): boolean {
+        // decode to public key if it's an address
+        if (isAddress(key)) key = decodeAddress(key);
+
+        return keyFromPublic(key).verify(data, signature);
     }
 }

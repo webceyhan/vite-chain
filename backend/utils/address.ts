@@ -23,3 +23,8 @@ export const encodeAddress = (key: string): string =>
  */
 export const decodeAddress = (key: string): string =>
     bs58check.decode(key.slice(PREFIX.length)).toString('hex');
+
+/**
+ * Check if a string is a valid address.
+ */
+export const isAddress = (key: string): boolean => key.startsWith(PREFIX);
