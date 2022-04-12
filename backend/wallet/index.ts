@@ -1,15 +1,8 @@
-import {
-    createKeyPair,
-    decodeAddress,
-    decodeWiF,
-    encodeAddress,
-    encodeWiF,
-    isAddress,
-    keyFromPrivate,
-    keyFromPublic,
-} from './utils';
-import { Transaction } from './core';
+import { Transaction } from '../core';
 import { readFileSync, writeFileSync } from 'fs';
+import { createKeyPair, keyFromPrivate, keyFromPublic } from './keygen';
+import { decodeAddress, encodeAddress, isAddress } from './address';
+import { decodeWiF, encodeWiF } from './wif';
 
 export class Wallet {
     /**
