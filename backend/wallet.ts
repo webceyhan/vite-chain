@@ -85,15 +85,14 @@ export class Wallet {
     // STATIC METHODS //////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Create a new wallet from a private key in hex string.
+     * Load a wallet from a private key in hex string.
      */
     static fromKey(privateKey: string): Wallet {
         return new Wallet(keyFromPrivate(privateKey));
     }
 
     /**
-     * Load a wallet from a private key
-     * in WiF (Wallet Import Format) encoded string.
+     * Load a wallet from a private key in WiF string.
      */
     static fromWiF(wif: string): Wallet {
         return Wallet.fromKey(decodeWiF(wif));
