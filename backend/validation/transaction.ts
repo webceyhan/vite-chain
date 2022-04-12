@@ -1,5 +1,5 @@
 import { Transaction } from '../core';
-import { decodeAddress, verifySignature } from '../utils';
+import { Wallet } from '../wallet';
 
 export class TransactionError extends Error {}
 
@@ -10,11 +10,8 @@ const hasValidSignature = (tx: Transaction): boolean => {
     // bypass signature for coinbase transactions
     if (tx.isCoinbase) return true;
 
-    // convert from address to public key
-    const publicKey = decodeAddress(tx.from);
-
     // verify signature with public key of sender
-    return verifySignature(publicKey, tx.hash, tx.signature);
+    return Wallet.verify(tx.hash, tx.signature, tx.from);
 };
 
 /**

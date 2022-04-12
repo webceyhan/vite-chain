@@ -31,19 +31,3 @@ export const keyFromPrivate = (key: string): KeyPair =>
  */
 export const keyFromPublic = (key: string): KeyPair =>
     ecdsa.keyFromPublic(key, 'hex');
-
-/**
- * Verify a signture of data with corresponding public key.
- */
-export const verifySignature = (
-    key: string,
-    data: string,
-    signature: string
-): boolean => {
-    try {
-        return keyFromPublic(key).verify(data, signature);
-    } catch (error) {
-        // ignore errors
-        return false;
-    }
-};
