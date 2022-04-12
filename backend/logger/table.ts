@@ -1,5 +1,6 @@
 import { table as _table, getBorderCharacters } from 'table';
-import { Block, Chain, CoinPool, Transaction, Wallet } from '../core';
+import { Block, Chain, CoinPool, Transaction } from '../core';
+import { Wallet } from '../wallet';
 import {
     formatAddress,
     formatCoin,

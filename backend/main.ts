@@ -1,4 +1,5 @@
-import { Chain, Wallet } from './core';
+import { Chain } from './core';
+import { Wallet } from './wallet';
 import { createLogger } from './logger';
 import { createAPI } from './api';
 

@@ -1,6 +1,6 @@
 import { chain, miner, logger } from './main';
 import { delay, random } from './utils';
-import { Wallet } from './core';
+import { Wallet } from './wallet';
 
 // DEMO WALLET
 // private  : 633d6bee776c7b54359bf56c5c0767f859c49345f9dac5aef5fd8d1d1a0bb616

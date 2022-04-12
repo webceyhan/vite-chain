@@ -1,5 +1,6 @@
 import { formatTitle } from './format';
-import { Block, Chain, CoinPool, Transaction, Wallet } from '../core';
+import { Block, Chain, CoinPool, Transaction } from '../core';
+import { Wallet } from '../wallet';
 import {
     tableFromBlock,
     tableFromChain,

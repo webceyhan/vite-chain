@@ -3,8 +3,8 @@ import {
     decodeBase58Check,
     encodeBase58Check,
     keyFromPrivate,
-} from '../utils';
-import { Transaction } from './transaction';
+} from './utils';
+import { Transaction } from './core';
 
 export class Wallet {
     /**
