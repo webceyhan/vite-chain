@@ -1,7 +1,8 @@
 import {
     createKeyPair,
-    decodeBase58Check,
+    decodeWiF,
     encodeBase58Check,
+    encodeWiF,
     keyFromPrivate,
 } from './utils';
 import { Transaction } from './core';
@@ -34,11 +35,10 @@ export class Wallet {
     }
 
     /**
-     * Wallet private key in WIF string
-     * (Wallet Import Format) encoded with base58check.
+     * Private key in WiF (Wallet-Import-Format) encoded string.
      */
     get WIF(): string {
-        return encodeBase58Check(this.privateKey);
+        return encodeWiF(this.privateKey);
     }
 
     /**
@@ -72,10 +72,10 @@ export class Wallet {
     }
 
     /**
-     * Create a new wallet from a private key in WIF string
-     * (Wallet Import Format) encoded with base58check.
+     * Load a wallet from a private key
+     * in WiF (Wallet Import Format) encoded string.
      */
     static fromWIF(wif: string): Wallet {
-        return Wallet.fromKey(decodeBase58Check(wif));
+        return Wallet.fromKey(decodeWiF(wif));
     }
 }
