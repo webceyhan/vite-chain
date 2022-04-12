@@ -17,8 +17,8 @@ const loadOne = async (hash: any) => {
     state.one = await api.findWallet(hash);
 };
 
-const transfer = async (from: string, to: string, value: number) => {
-    await api.sendTransaction({ from, to, value });
+const transfer = async (tx: any) => {
+    await api.sendTransaction(tx);
 };
 
 export const useWallets = () => ({
