@@ -1,5 +1,5 @@
 import { ROOT_ADDRESS, TRANSACTION_COMMISION } from '../constants';
-import { sha256 } from '../utils';
+import { createHash } from '../utils';
 
 /**
  * The type of a transaction.
@@ -85,6 +85,6 @@ export class Transaction {
      * Calculate the hash of the transaction.
      */
     calculateHash(): string {
-        return sha256(this.from + this.to + this.amount + this.timestamp);
+        return createHash(this.from + this.to + this.amount + this.timestamp);
     }
 }

@@ -1,22 +1,6 @@
 import bs58check from 'bs58check';
-import { createHash } from 'crypto';
+
 import { ec } from 'elliptic';
-
-// HASHING HELPERS /////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Generate a sha256 hash from a string.
- * Result is a hexadecimal string with length 64.
- */
-export const sha256 = (value: any) =>
-    createHash('sha256').update(value).digest('hex');
-
-/**
- * Generate a ripeMD160 hash from a string.
- * Result is a hexadecimal string with length 40.
- */
-export const ripeMD160 = (value: any) =>
-    createHash('ripemd160').update(value).digest('hex');
 
 // ENCODING HELPERS ////////////////////////////////////////////////////////////////////////////////
 

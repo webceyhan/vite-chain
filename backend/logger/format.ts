@@ -19,7 +19,7 @@ export const formatDate = (date: any) => grey(new Date(date).toLocaleString());
 /**
  * Format hash to be displayed.
  */
-export const formatHash = (hash: string) => blue(`0x${hash}`);
+export const formatHash = (hash: string) => blue(hash);
 
 /**
  * Format address to be displayed.

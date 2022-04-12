@@ -274,7 +274,7 @@ export class Chain {
     computeProofOfWork(block: Block): void {
         // define proof string based on zeros
         // e.g. if difficulty is 3, then proof string will be '000'
-        const prefix = '0'.repeat(block.difficulty);
+        const prefix = '0x' + '0'.repeat(block.difficulty);
 
         // loop until valid proof is found
         while (!block.hash.startsWith(prefix)) {
