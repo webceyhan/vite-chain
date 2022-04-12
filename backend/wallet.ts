@@ -9,36 +9,46 @@ import { Transaction } from './core';
 
 export class Wallet {
     /**
-     * Address of the wallet.
-     *
-     * It's derived from the public key encoded in base58check format
-     * to shorten the address length for easier readability.
+     * Cached values for lazy-loaded getters.
      */
-    public readonly address: string;
+    #cachedAddress?: string;
+    #cachedPublicKey?: string;
+    #cachedPrivateKey?: string;
+    #cachedWiF?: string;
+
+    constructor(private readonly keyPair = createKeyPair()) {}
 
     /**
-     * Wallet public key in compact hex string.
+     * Address of the wallet.
+     *
+     * In Bitcoin, it's derived from the public key encoded in
+     * base58check format to shorten the address length for readability.
      */
-    public readonly publicKey: string;
-
-    constructor(private keyPair = createKeyPair()) {
-        // initialize cached wallet properties
-        this.publicKey = this.keyPair.getPublic(true, 'hex');
-        this.address = encodeAddress(this.publicKey);
+    get address(): string {
+        return (this.#cachedAddress ??= encodeAddress(
+            this.keyPair.getPublic(true, 'hex')
+        ));
     }
 
     /**
-     * Wallet private key in hex string.
+     * Public key in hex string.
+     */
+    get publicKey(): string {
+        return (this.#cachedPublicKey ??= this.keyPair.getPublic('hex'));
+    }
+
+    /**
+     * Private key in hex string.
      */
     get privateKey(): string {
-        return this.keyPair.getPrivate('hex');
+        return (this.#cachedPrivateKey ??= this.keyPair.getPrivate('hex'));
     }
 
     /**
      * Private key in WiF (Wallet-Import-Format) encoded string.
      */
-    get WIF(): string {
-        return encodeWiF(this.privateKey);
+    get WiF(): string {
+        return (this.#cachedWiF ??= encodeWiF(this.privateKey));
     }
 
     /**
@@ -75,7 +85,7 @@ export class Wallet {
      * Load a wallet from a private key
      * in WiF (Wallet Import Format) encoded string.
      */
-    static fromWIF(wif: string): Wallet {
+    static fromWiF(wif: string): Wallet {
         return Wallet.fromKey(decodeWiF(wif));
     }
 }
