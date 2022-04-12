@@ -4,7 +4,7 @@ import {
     BLOCK_REWARD,
     BLOCK_REWARD_INTERVAL,
 } from '../constants';
-import { Transaction } from './Transaction';
+import { Transaction } from './transaction';
 import { sha256 } from '../utils';
 
 export class Block {

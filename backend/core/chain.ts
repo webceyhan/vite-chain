@@ -4,9 +4,9 @@ import {
     BLOCK_TIME_INTERVAL,
     ROOT_ADDRESS,
 } from '../constants';
-import { Block, GENESIS_BLOCK } from './Block';
-import { Transaction } from './Transaction';
-import { CoinPool } from './Coin';
+import { Block, GENESIS_BLOCK } from './block';
+import { Transaction } from './transaction';
+import { CoinPool } from './coin';
 import { delay } from '../utils';
 import EventEmitter from 'events';
 

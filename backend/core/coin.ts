@@ -1,4 +1,4 @@
-import { Transaction } from './Transaction';
+import { Transaction } from './transaction';
 
 /**
  * Coin (UTXO - Unspent Transaction Output)

@@ -4,7 +4,7 @@ import {
     encodeBase58Check,
     keyFromPrivate,
 } from '../utils';
-import { Transaction } from './Transaction';
+import { Transaction } from './transaction';
 
 export class Wallet {
     /**
