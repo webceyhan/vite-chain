@@ -25,6 +25,7 @@ export const decodeAddress = (key: string): string =>
     bs58check.decode(key.slice(PREFIX.length)).toString('hex');
 
 /**
- * Check if a string is a valid address.
+ * Check if a string is a valid address and has length of 52.
  */
-export const isAddress = (key: string): boolean => key.startsWith(PREFIX);
+export const isAddress = (key: string): boolean =>
+    key.length === 52 && key.startsWith(PREFIX);
