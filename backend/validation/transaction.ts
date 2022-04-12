@@ -1,5 +1,5 @@
 import { Transaction } from '../core';
-import { decodeBase58Check, verifySignature } from '../utils';
+import { decodeAddress, verifySignature } from '../utils';
 
 export class TransactionError extends Error {}
 
@@ -11,7 +11,7 @@ const hasValidSignature = (tx: Transaction): boolean => {
     if (tx.isCoinbase) return true;
 
     // convert from address to public key
-    const publicKey = decodeBase58Check(tx.from);
+    const publicKey = decodeAddress(tx.from);
 
     // verify signature with public key of sender
     return verifySignature(publicKey, tx.hash, tx.signature);

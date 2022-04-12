@@ -1,7 +1,7 @@
 import {
     createKeyPair,
     decodeWiF,
-    encodeBase58Check,
+    encodeAddress,
     encodeWiF,
     keyFromPrivate,
 } from './utils';
@@ -24,7 +24,7 @@ export class Wallet {
     constructor(private keyPair = createKeyPair()) {
         // initialize cached wallet properties
         this.publicKey = this.keyPair.getPublic(true, 'hex');
-        this.address = encodeBase58Check(this.publicKey);
+        this.address = encodeAddress(this.publicKey);
     }
 
     /**
