@@ -9,8 +9,14 @@ import {
     keyFromPublic,
 } from './utils';
 import { Transaction } from './core';
+import { readFileSync, writeFileSync } from 'fs';
 
 export class Wallet {
+    /**
+     * Default location of the key file.
+     */
+    static readonly PATH = `${__dirname}/../wallet.key`;
+
     /**
      * Cached values for lazy-loaded getters.
      */
@@ -82,6 +88,16 @@ export class Wallet {
         return tx;
     }
 
+    /**
+     * Export wallet to a WiF file.
+     *
+     * If no path is given, the default wallet path is used
+     * which is in the root directory of the project.
+     */
+    export(path: string = Wallet.PATH): void {
+        writeFileSync(path, this.WiF);
+    }
+
     // STATIC METHODS //////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -96,6 +112,16 @@ export class Wallet {
      */
     static fromWiF(wif: string): Wallet {
         return Wallet.fromKey(decodeWiF(wif));
+    }
+
+    /**
+     * Import a wallet from a WiF file.
+     *
+     * If no path is given, the default wallet path is used
+     * which is in the root directory of the project.
+     */
+    static import(path: string = Wallet.PATH): Wallet {
+        return Wallet.fromWiF(readFileSync(path).toString());
     }
 
     /**
