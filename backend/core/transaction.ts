@@ -13,9 +13,9 @@ export type TransactionType = 'coinbase' | 'transfer';
 
 export class Transaction {
     /**
-     * Unique hash string representing the transaction.
+     * Cached values for lazy-loaded getters.
      */
-    public hash: string;
+    #cachedHash?: string;
 
     /**
      * It’s a unique number that tracks the position
@@ -52,10 +52,7 @@ export class Transaction {
          * Timestamp on which the transaction was created.
          */
         public timestamp: number = Date.now()
-    ) {
-        // set calculated hash
-        this.hash = this.calculateHash();
-    }
+    ) {}
 
     /**
      * Flag if transaction is coinbase transaction.
@@ -82,9 +79,16 @@ export class Transaction {
     }
 
     /**
-     * Calculate the hash of the transaction.
+     * Unique hash string representing the transaction.
      */
-    calculateHash(): string {
+    get hash(): string {
+        return (this.#cachedHash ??= this.createHash());
+    }
+
+    /**
+     * Create a computed hash string for the transaction.
+     */
+    createHash(): string {
         return createHash(this.from + this.to + this.amount + this.timestamp);
     }
 }
