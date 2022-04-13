@@ -1,4 +1,4 @@
-import { Block, GENESIS_BLOCK } from '../core';
+import { Block } from '../core';
 import { validateBlock } from './block';
 import { compare } from '../utils';
 
@@ -10,7 +10,7 @@ export class ChainError extends Error {}
 export const validateChain = (blocks: Block[]): void | never => {
     // fail if the first block in the chain is not matching
     // against the genesis block in string comparison
-    if (compare(blocks[0], GENESIS_BLOCK)) {
+    if (compare(blocks[0], Block.GENESIS)) {
         throw new ChainError('Invalid genesis block');
     }
 

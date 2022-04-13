@@ -1,4 +1,3 @@
-import { BLOCK_DIFFICULTY } from '../constants';
 import { Transaction } from './transaction';
 import { createHash } from '../utils';
 
@@ -20,6 +19,23 @@ export class Block {
      * around every 4 years with a 10 minute block interval
      */
     static readonly REWARD_HALVING_INTERVAL = 100;
+
+    /**
+     * In a blockchain, the genesis block refers to the first-ever block created on the network.
+     * Whenever a block is integrated with the rest of the chain, it should reference the preceding block.
+     *
+     * Conversely, in the case of this initial block, it does not have any preceding block to point to.
+     * Therefore, a genesis block is usually hardcoded into the blockchain. This way,
+     * subsequent blocks can be created on it. It usually has an index of 0.
+     */
+    static readonly GENESIS: Readonly<Block> = new Block(
+        /* index        */ 0,
+        /* parent hash  */ '0x0000000000000000000000000000000000000000000000000000000000000000',
+        /* transactions */ [],
+        /* difficulty   */ 0,
+        /* nonce        */ 0,
+        /* timestamp    */ new Date('2022-02-22T00:00:00.000Z').getTime()
+    );
 
     /**
      * Cached values for lazy-loaded getters.
@@ -155,20 +171,3 @@ export class Block {
         this.#cachedHash = undefined;
     }
 }
-
-/**
- * In a blockchain, the genesis block refers to the first-ever block created on the network.
- * Whenever a block is integrated with the rest of the chain, it should reference the preceding block.
- *
- * Conversely, in the case of this initial block, it does not have any preceding block to point to.
- * Therefore, a genesis block is usually hardcoded into the blockchain. This way,
- * subsequent blocks can be created on it. It usually has an index of 0.
- */
-export const GENESIS_BLOCK: Readonly<Block> = new Block(
-    /* index        */ 0,
-    /* parentHash   */ '0',
-    /* transactions */ [],
-    /* difficulty   */ BLOCK_DIFFICULTY,
-    /* nonce        */ 0,
-    /* timestamp    */ new Date('2022-01-01').getTime()
-);

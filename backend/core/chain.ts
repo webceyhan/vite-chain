@@ -1,5 +1,5 @@
 import { BLOCK_TIME_INTERVAL } from '../constants';
-import { Block, GENESIS_BLOCK } from './block';
+import { Block } from './block';
 import { Transaction } from './transaction';
 import { CoinPool } from './coin';
 import { delay } from '../utils';
@@ -22,7 +22,7 @@ export class Chain {
     /**
      * The chain of blocks starting from the genesis block.
      */
-    public blocks: Readonly<Block>[] = [GENESIS_BLOCK];
+    public blocks: Readonly<Block>[] = [Block.GENESIS];
 
     /**
      * Map of transactions by their hash.
