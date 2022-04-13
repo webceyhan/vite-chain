@@ -1,12 +1,26 @@
-import {
-    BLOCK_DIFFICULTY,
-    BLOCK_REWARD,
-    BLOCK_REWARD_INTERVAL,
-} from '../constants';
+import { BLOCK_DIFFICULTY } from '../constants';
 import { Transaction } from './transaction';
 import { createHash } from '../utils';
 
 export class Block {
+    /**
+     * Initial mining reward per block.
+     *
+     * Original block reward for miners was 50 BTC.
+     *
+     * Every N blocks defined by BLOCK_REWARD_INTERVAL,
+     * the reward is divided by 2 which called halving.
+     */
+    static readonly INITIAL_REWARD = 50;
+
+    /**
+     * Number of blocks for halving the reward.
+     *
+     * In Bitcoin, original block reward interval was 210000
+     * around every 4 years with a 10 minute block interval
+     */
+    static readonly REWARD_HALVING_INTERVAL = 100;
+
     /**
      * Cached values for lazy-loaded getters.
      */
@@ -80,11 +94,13 @@ export class Block {
      */
     get miningReward(): number {
         // calculate block reward halving rate
-        const halvingRate = Math.floor(this.index / BLOCK_REWARD_INTERVAL);
+        const halvingRate = Math.floor(
+            this.index / Block.REWARD_HALVING_INTERVAL
+        );
 
         // calculate current block reward based on
         // initial_reward divided by 2 ** halving_rate
-        const reward = BLOCK_REWARD / Math.pow(2, halvingRate);
+        const reward = Block.INITIAL_REWARD / Math.pow(2, halvingRate);
 
         // return reward if available
         return reward > 0 ? reward : 0;

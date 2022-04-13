@@ -1,8 +1,4 @@
-import {
-    BLOCK_REWARD,
-    BLOCK_REWARD_INTERVAL,
-    BLOCK_TIME_INTERVAL,
-} from '../constants';
+import { BLOCK_TIME_INTERVAL } from '../constants';
 import { Block, GENESIS_BLOCK } from './block';
 import { Transaction } from './transaction';
 import { CoinPool } from './coin';
@@ -137,12 +133,12 @@ export class Chain {
      */
     get maxSupply(): number {
         let total = 0;
-        let reward = BLOCK_REWARD;
+        let reward = Block.INITIAL_REWARD;
 
         // halve reward until it reaches 0
         while (reward > 0) {
             // sum reward multiplied by BLOCK_REWARD_INTERVAL
-            total += reward * BLOCK_REWARD_INTERVAL;
+            total += reward * Block.REWARD_HALVING_INTERVAL;
             reward /= 2; // halve reward
         }
 
