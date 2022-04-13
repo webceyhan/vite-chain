@@ -2,7 +2,6 @@ import {
     BLOCK_REWARD,
     BLOCK_REWARD_INTERVAL,
     BLOCK_TIME_INTERVAL,
-    ROOT_ADDRESS,
 } from '../constants';
 import { Block, GENESIS_BLOCK } from './block';
 import { Transaction } from './transaction';
@@ -226,7 +225,7 @@ export class Chain {
     private addCoinbaseTransaction(block: Block): void {
         // create coinbase transaction
         const coinbaseTx = new Transaction(
-            ROOT_ADDRESS,
+            '0',
             this.minerAddress,
             block.reward
         );

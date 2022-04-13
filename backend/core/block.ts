@@ -1,5 +1,4 @@
 import {
-    ROOT_ADDRESS,
     BLOCK_DIFFICULTY,
     BLOCK_REWARD,
     BLOCK_REWARD_INTERVAL,
@@ -112,7 +111,7 @@ export class Block {
      * It is also used as recipient address for the coinbase transaction.
      */
     get miner(): string {
-        return this.transactions[0]?.to || ROOT_ADDRESS;
+        return this.transactions[0]?.to || '0';
     }
 
     /**

@@ -14,11 +14,6 @@ export const VERSION = 0x80;
 export const COIN_SYMBOL = 'VTC';
 
 /**
- * Address of the coinbase transaction.
- */
-export const ROOT_ADDRESS = 'root';
-
-/**
  * Difficulty level for proof-of-work mechanism
  */
 export const BLOCK_DIFFICULTY = 1;

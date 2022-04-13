@@ -1,4 +1,3 @@
-import { ROOT_ADDRESS } from '../constants';
 import { createHash } from '../utils';
 
 /**
@@ -68,7 +67,7 @@ export class Transaction {
      * It doesn't have a sender address and signature.
      */
     get isCoinbase(): boolean {
-        return this.from === ROOT_ADDRESS && !this.signature;
+        return this.from === '0' && !this.signature;
     }
 
     /**
