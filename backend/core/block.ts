@@ -32,7 +32,7 @@ export class Block {
         /**
          * The list of transactions that are included in the block.
          */
-        public transactions: Readonly<Transaction>[],
+        public transactions: Readonly<Transaction>[] = [],
 
         /**
          * The POW difficulty level of the block.
