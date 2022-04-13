@@ -50,8 +50,8 @@ const createFaker = async () => {
             // ignore discarding errors
         }
 
-        // wait for a while
-        await delay(random(5));
+        // wait for 10 to 20 seconds
+        await delay(random(20, 10));
     }
 };
 
