@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm:fake:backend\" \"npm:dev:frontend\" ",
     "dev:frontend": "vite",
     "dev:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/main.ts",
-    "fake:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/test.ts",
+    "fake:backend": "ts-node-dev --respawn --project backend/tsconfig.json backend/faker.ts",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "jest",
