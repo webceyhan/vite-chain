@@ -8,7 +8,7 @@ export class Wallet {
     /**
      * Default location of the key file.
      */
-    static readonly PATH = `${__dirname}/../wallet.key`;
+    static readonly PATH = `${__dirname}/../../wallet.key`;
 
     /**
      * Cached values for lazy-loaded getters.
