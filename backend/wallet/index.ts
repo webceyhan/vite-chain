@@ -75,7 +75,7 @@ export class Wallet {
         const tx = new Transaction(this.address, to, amount);
 
         // sign transaction with wallet's private key
-        tx.signature = this.sign(tx.hash);
+        (tx as any).signature = this.sign(tx.hash);
 
         // return signed transaction
         return tx;

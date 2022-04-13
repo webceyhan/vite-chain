@@ -32,17 +32,17 @@ export class Transaction {
         /**
          * Sender address of the transaction.
          */
-        public from: string,
+        public readonly from: string,
 
         /**
          * Recipient address of the transaction.
          */
-        public to: string,
+        public readonly to: string,
 
         /**
          * Amount of the transaction.
          */
-        public amount: number,
+        public readonly amount: number,
 
         /**
          * Signature of the transaction signed by the sender.
@@ -51,12 +51,12 @@ export class Transaction {
          * If not provided, it will be considered as coinbase transaction
          * which was created by the node for mining rewards.
          */
-        public signature?: string,
+        public readonly signature?: string,
 
         /**
          * Timestamp on which the transaction was created.
          */
-        public timestamp: number = Date.now()
+        public readonly timestamp: number = Date.now()
     ) {}
 
     /**
