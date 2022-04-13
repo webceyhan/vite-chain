@@ -1,4 +1,4 @@
-import { ROOT_ADDRESS, TRANSACTION_COMMISION } from '../constants';
+import { ROOT_ADDRESS } from '../constants';
 import { createHash } from '../utils';
 
 /**
@@ -12,6 +12,12 @@ import { createHash } from '../utils';
 export type TransactionType = 'coinbase' | 'transfer';
 
 export class Transaction {
+    /**
+     * Transaction commission percentage to calculate the fee
+     * by multiplying with the amount of the transaction.
+     */
+    static readonly COMMISION = 0.01;
+
     /**
      * Cached values for lazy-loaded getters.
      */
@@ -69,13 +75,13 @@ export class Transaction {
     }
 
     /**
-     * Transaction fee calculated from the amount.
+     * Transaction fee to be paid by the sender.
      *
      * There is no fee for coinbase transactions
-     * which are created by the node for mining rewards.
+     * which is created by the network for the miner.
      */
     get fee(): number {
-        return this.isCoinbase ? 0 : this.amount * TRANSACTION_COMMISION;
+        return this.isCoinbase ? 0 : this.amount * Transaction.COMMISION;
     }
 
     /**

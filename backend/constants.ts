@@ -49,12 +49,6 @@ export const BLOCK_REWARD = 50;
  */
 export const BLOCK_REWARD_INTERVAL = 100;
 
-/**
- * Commision per transaction to calculate fee
- * multiplied by the amount of transaction.
- */
-export const TRANSACTION_COMMISION = 0.01;
-
 // NETWORK /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
