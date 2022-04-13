@@ -52,7 +52,7 @@ export class Transaction {
          * If not provided, it will be considered as coinbase transaction
          * which was created by the node for mining rewards.
          */
-        public signature: string = '',
+        public signature?: string,
 
         /**
          * Timestamp on which the transaction was created.
@@ -64,7 +64,7 @@ export class Transaction {
      * Flag if transaction is coinbase transaction.
      */
     get isCoinbase(): boolean {
-        return this.from === ROOT_ADDRESS;
+        return this.from === ROOT_ADDRESS && !this.signature;
     }
 
     /**
