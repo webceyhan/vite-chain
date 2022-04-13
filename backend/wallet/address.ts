@@ -2,6 +2,14 @@ import bs58check from 'bs58check';
 import { COIN_SYMBOL } from '../constants';
 
 /**
+ * todo: find browser support for bs58check library.
+ *
+ * We enable testnet to use address same as compact form of public key
+ * to avoid bs58check compression which is not available in on the browser.
+ */
+const TESTNET = true;
+
+/**
  * Prefix of the addres string (2 characters).
  */
 const PREFIX = COIN_SYMBOL.toLowerCase().slice(0, -1);
@@ -13,7 +21,7 @@ const PREFIX = COIN_SYMBOL.toLowerCase().slice(0, -1);
  * Bitcoin address is a base58Check encoded string with length 34.
  */
 export const encodeAddress = (key: string): string =>
-    PREFIX + bs58check.encode(Buffer.from(key, 'hex'));
+    TESTNET ? key : PREFIX + bs58check.encode(Buffer.from(key, 'hex'));
 
 /**
  * Convert a compressed address string to a hexadecimal public key.
@@ -22,7 +30,7 @@ export const encodeAddress = (key: string): string =>
  * Bitcoin uses base58Check encoding to convert addresses to public keys.
  */
 export const decodeAddress = (key: string): string =>
-    bs58check.decode(key.slice(PREFIX.length)).toString('hex');
+    TESTNET ? key : bs58check.decode(key.slice(2)).toString('hex');
 
 /**
  * Check if a string is a valid address and has length of 52.
