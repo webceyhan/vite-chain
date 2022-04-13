@@ -1,8 +1,7 @@
 import { ec } from 'elliptic';
-import bs58check from 'bs58check';
 // import { Sha256 } from '@aws-crypto/sha256-browser';
 
-const EC = new ec('secp256k1');
+const ecdsa = new ec('secp256k1');
 
 // export class BrowserTransaction {
 //     constructor(
@@ -29,21 +28,11 @@ const EC = new ec('secp256k1');
 //     }
 // }
 
-export class BrowserWallet {
+export class WebWallet {
     public readonly address: string;
-    public readonly publicKey: string;
 
-    constructor(private keyPair = EC.genKeyPair()) {        
-        // initialize cached wallet properties
-        this.publicKey = this.keyPair.getPublic(true, 'hex');
-        this.address = bs58check.encode(this.keyPair.getPublic(true, 'array'));
-    }
-
-    /**
-     * Wallet private key in hex string.
-     */
-    get privateKey(): string {
-        return this.keyPair.getPrivate('hex');
+    constructor(private keyPair = ecdsa.genKeyPair()) {
+        this.address = this.keyPair.getPublic(true, 'hex');
     }
 
     /**
@@ -72,7 +61,7 @@ export class BrowserWallet {
     /**
      * Create a new wallet from a private key in hex string.
      */
-    static fromKey(privateKey: string): BrowserWallet {
-        return new BrowserWallet(EC.keyFromPrivate(privateKey, 'hex'));
+    static fromKey(privateKey: string): WebWallet {
+        return new WebWallet(ecdsa.keyFromPrivate(privateKey, 'hex'));
     }
 }

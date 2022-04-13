@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { BrowserWallet } from '../BrowserWallet'
+import { WebWallet } from '../WebWallet'
 import { computed, ref } from 'vue';
 import { useWallets } from '../store/wallets';
 import ListGroup from '../components/common/ListGroup.vue';
@@ -15,7 +15,7 @@ const { wallet, loadOne, transfer } = useWallets();
 const demoKey = '633d6bee776c7b54359bf56c5c0767f859c49345f9dac5aef5fd8d1d1a0bb616';
 
 // define key-pair and address
-let walletObj: BrowserWallet;
+let walletObj: WebWallet;
 
 // define key form (defaults to local storage)
 const keyForm = ref(localStorage.getItem('key') ?? demoKey);
@@ -28,10 +28,10 @@ const canTransfer = computed(() =>
 
 function onLogin() {
   // initialize wallet object
-  walletObj = BrowserWallet.fromKey(keyForm.value);
+  walletObj = WebWallet.fromKey(keyForm.value);
 
   // load wallet data from backend
-  // loadOne(walletObj.address);
+  loadOne(walletObj.address);
 
   // store private key in local storage
   localStorage.setItem('key', keyForm.value);
@@ -106,24 +106,14 @@ function onTransfer() {
                 <label for="amount" class="form-label">Amount</label>
 
                 <div class="input-group">
-                  <input
-                    id="amount"
-                    type="number"
-                    min="0"
-                    :max="wallet.balance"
-                    class="form-control"
-                    v-model.number="txForm.amount"
-                    required
-                  />
+                  <input id="amount" type="number" min="0" :max="wallet.balance" class="form-control"
+                    v-model.number="txForm.amount" required />
                   <div class="input-group-text">
                     <small>VT</small>
                   </div>
                   <div class="input-group-text">
-                    <button
-                      class="btn btn-link"
-                      type="button"
-                      @click="txForm.amount = wallet?.balance || 0"
-                    >max</button>
+                    <button class="btn btn-link" type="button"
+                      @click="txForm.amount = wallet?.balance || 0">max</button>
                   </div>
                 </div>
               </div>
