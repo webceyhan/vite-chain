@@ -6,14 +6,14 @@ export class Chain {
     /**
      * The chain of blocks starting from the genesis block.
      */
-    readonly blocks: Readonly<Block>[] = [Block.GENESIS];
+    readonly blocks: Block[] = [Block.GENESIS];
 
     /**
      * Map of transactions by their hash.
      *
      * This map is used to keep track of all transactions in the blockchain.
      */
-    readonly transactionMap: Map<string, Readonly<Transaction>> = new Map();
+    readonly transactionMap: Map<string, Transaction> = new Map();
 
     /**
      * Pool of coins (UTXOs) corresponding to the addresses in the chain.

@@ -41,7 +41,7 @@ export class Block {
      * Therefore, a genesis block is usually hardcoded into the blockchain. This way,
      * subsequent blocks can be created on it. It usually has an index of 0.
      */
-    static readonly GENESIS: Readonly<Block> = new Block(
+    static readonly GENESIS = new Block(
         /* index        */ 0,
         /* parent hash  */ '0x0000000000000000000000000000000000000000000000000000000000000000',
         /* transactions */ [],
@@ -62,7 +62,7 @@ export class Block {
          * It’s a unique number that tracks the position
          * of every block in the entire blockchain.
          */
-        public index: number,
+        public readonly index: number,
 
         /**
          * The hash of the parent block.
@@ -70,27 +70,27 @@ export class Block {
          * It points to the hash of the preceding block in the blockchain,
          * something important in maintaining the blockchain’s integrity.
          */
-        public parentHash: string,
+        public readonly parentHash: string,
 
         /**
          * The list of transactions that are included in the block.
          */
-        public transactions: Readonly<Transaction>[] = [],
+        public readonly transactions: Readonly<Transaction>[] = [],
 
         /**
          * The POW difficulty level of the block.
          */
-        public difficulty: number = 0,
+        public readonly difficulty: number = 0,
 
         /**
          * It's nonce for proof-of-work mechanism.
          */
-        public nonce: number = 0,
+        public readonly nonce: number = 0,
 
         /**
          * The timestamp on which the block was created.
          */
-        public timestamp: number = Date.now()
+        public readonly timestamp: number = Date.now()
     ) {}
 
     /**

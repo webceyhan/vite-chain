@@ -110,7 +110,7 @@ export class Node {
         const block = this.#chain.nextBlock;
 
         // add pending transactions to the block
-        block.transactions = [...this.#pendingTransactions];
+        (block as any).transactions = [...this.#pendingTransactions];
 
         // add coinbase transaction
         this.#addCoinbaseTransaction(block);
@@ -154,7 +154,7 @@ export class Node {
         // loop until valid proof is found
         while (!block.hash.startsWith(prefix)) {
             // increment nonce
-            block.nonce++;
+            (block as any).nonce++;
 
             // reset hash to recalculate
             block.resetHash();
