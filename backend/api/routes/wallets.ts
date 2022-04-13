@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { Chain } from '../../core';
+import { Node } from '../../node';
 import { serializeTransaction } from '../../serialization';
 
-export default (chain: Chain) => {
+export default (node: Node) => {
     // define router
     const router = Router();
 
@@ -11,9 +11,9 @@ export default (chain: Chain) => {
      */
     router.get('/', (req, res) => {
         res.json(
-            chain.addresses.map((address) => ({
+            node.chain.addresses.map((address) => ({
                 address,
-                balance: chain.findBalance(address),
+                balance: node.chain.findBalance(address),
             }))
         );
     });
@@ -29,8 +29,8 @@ export default (chain: Chain) => {
             // try to find wallet info
             res.json({
                 address,
-                balance: chain.findBalance(address),
-                transactions: chain
+                balance: node.chain.findBalance(address),
+                transactions: node.chain
                     .findTransactionsByAddress(address)
                     .map(serializeTransaction),
             });

@@ -1,4 +1,4 @@
-import { chain, miner, logger } from './main';
+import { node, miner, logger } from './main';
 import { delay, random } from './utils';
 import { Wallet } from './wallet';
 
@@ -45,7 +45,7 @@ const createFaker = async () => {
             const tx = randomTransaction();
 
             // add transaction to chain
-            chain.addTransaction(tx);
+            node.addTransaction(tx);
         } catch (error) {
             // ignore discarding errors
         }

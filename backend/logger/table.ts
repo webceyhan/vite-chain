@@ -27,7 +27,6 @@ export const tableFromChain = (ch: Chain) =>
         ['Difficulty', formatNumber(ch.difficulty)],
         ['Max Supply', formatCoin(ch.maxSupply)],
         ['Total Supply', formatCoin(ch.totalSupply)],
-        ['Miner Address', formatAddress(ch.minerAddress)],
     ]);
 
 /**

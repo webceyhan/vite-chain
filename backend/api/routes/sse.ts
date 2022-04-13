@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { sse } from '../middlewares';
+import { Node } from '../../node';
 import { Block, Chain, Transaction } from '../../core';
 import { serializeBlock, serializeTransaction } from '../../serialization';
 
-export default (chain: Chain) => {
+export default (node: Node) => {
     // define router
     const router = Router();
 
@@ -12,7 +13,7 @@ export default (chain: Chain) => {
      */
     router.get('/chain', sse(), (req, res) => {
         // define event listener
-        const handler = () =>
+        const handler = (chain: Chain) =>
             res.send({
                 totalBlocks: chain.size,
                 totalWallets: chain.addressSize,
@@ -20,10 +21,10 @@ export default (chain: Chain) => {
                 lastBlockTimestamp: chain.lastBlock.timestamp,
             });
 
-        chain.on('chain:updated', handler);
+        node.on('chain:updated', handler);
 
         // remove listener on response end
-        req.on('close', () => chain.off('chain:updated', handler));
+        req.on('close', () => node.off('chain:updated', handler));
     });
 
     /**
@@ -37,10 +38,10 @@ export default (chain: Chain) => {
             res.send({ ...json, txCount: transactions.length });
         };
 
-        chain.on('block:added', handler);
+        node.on('block:added', handler);
 
         // remove listener on response end
-        req.on('close', () => chain.off('block:added', handler));
+        req.on('close', () => node.off('block:added', handler));
     });
 
     /**
@@ -50,10 +51,10 @@ export default (chain: Chain) => {
         // define event listener
         const handler = (tx: Transaction) => res.send(serializeTransaction(tx));
 
-        chain.on('transaction:added', handler);
+        node.on('transaction:added', handler);
 
         // remove listener on response end
-        req.on('close', () => chain.off('transaction:added', handler));
+        req.on('close', () => node.off('transaction:added', handler));
     });
 
     return router;

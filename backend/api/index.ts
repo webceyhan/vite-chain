@@ -2,14 +2,14 @@ import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { Chain } from '../core';
 import { PORT, HOSTNAME } from '../constants';
 import sseRouter from './routes/sse';
 import blocksRouter from './routes/blocks';
 import transactionsRouter from './routes/transactions';
 import walletsRouter from './routes/wallets';
+import { Node } from '../node';
 
-export const createAPI = (chain: Chain) => {
+export const createAPI = (node: Node) => {
     // create express app
     const app = express();
 
@@ -23,10 +23,10 @@ export const createAPI = (chain: Chain) => {
     app.use(bodyParser.json());
 
     // define routes
-    app.use('/api/sse', sseRouter(chain));
-    app.use('/api/blocks', blocksRouter(chain));
-    app.use('/api/transactions', transactionsRouter(chain));
-    app.use('/api/wallets', walletsRouter(chain));
+    app.use('/api/sse', sseRouter(node));
+    app.use('/api/blocks', blocksRouter(node));
+    app.use('/api/transactions', transactionsRouter(node));
+    app.use('/api/wallets', walletsRouter(node));
 
     // start listening
     server.listen(PORT, HOSTNAME, () =>
