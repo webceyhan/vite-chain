@@ -251,7 +251,7 @@ export class Chain {
             this.transactionMap.set(tx.hash, tx);
 
             // set block height for each transaction
-            (tx as any).blockHeight = block.height;
+            (tx as any).blockHeight = block.index;
         });
 
         // reset pending transactions

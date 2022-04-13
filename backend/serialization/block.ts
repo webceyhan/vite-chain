@@ -6,7 +6,7 @@ import {
 } from './transaction';
 
 type Keys =
-    | 'height'
+    | 'index'
     | 'parentHash'
     | 'difficulty'
     | 'nonce'
@@ -22,7 +22,7 @@ export type BlockJSON = Pick<Block, Keys> & { transactions: TransactionJSON[] };
  * Serialize block to JSON.
  */
 export const serializeBlock = (block: Block): BlockJSON => ({
-    height: block.height,
+    index: block.index,
     parentHash: block.parentHash,
     difficulty: block.difficulty,
     nonce: block.nonce,
@@ -38,7 +38,7 @@ export const serializeBlock = (block: Block): BlockJSON => ({
  */
 export const deserializeBlock = (json: BlockJSON): Block =>
     new Block(
-        json.height,
+        json.index,
         json.parentHash,
         json.transactions.map(deserializeTransaction),
         json.difficulty,

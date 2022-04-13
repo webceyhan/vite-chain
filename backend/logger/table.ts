@@ -35,7 +35,7 @@ export const tableFromChain = (ch: Chain) =>
  */
 export const tableFromBlock = (bc: Block) =>
     table([
-        ['Height', formatNumber(bc.height)],
+        ['Index', formatNumber(bc.index)],
         ['Hash', formatHash(bc.hash)],
         ['Parent Hash', formatHash(bc.parentHash)],
         ['Difficulty', formatNumber(bc.difficulty)],

@@ -18,8 +18,8 @@ const hasValidProof = (block: Block): boolean => {
  */
 export const validateBlock = (block: Block): void | never => {
     // fail if height is not valid
-    if (block.height < 0) {
-        throw new BlockError(`Invalid block height: ${block.height}`);
+    if (block.index < 0) {
+        throw new BlockError(`Invalid block height: ${block.index}`);
     }
 
     // fail if parent hash is not valid

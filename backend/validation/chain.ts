@@ -21,9 +21,9 @@ export const validateChain = (blocks: Block[]): void | never => {
         // get parent block to compare against
         const parentBlock = blocks[index - 1];
 
-        // fail if height not following the parent block
-        if (block.height !== parentBlock.height + 1) {
-            throw new ChainError(`Invalid block height: ${block.height}`);
+        // fail if index not following the parent block
+        if (block.index !== parentBlock.index + 1) {
+            throw new ChainError(`Invalid block index: ${block.index}`);
         }
 
         // fail if parent hash not matching the parent block

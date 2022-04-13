@@ -14,12 +14,12 @@ export class Block {
 
     constructor(
         /**
-         * The height (index) of the block.
+         * The index (height) of the block.
          *
          * It’s a unique number that tracks the position
          * of every block in the entire blockchain.
          */
-        public height: number,
+        public index: number,
 
         /**
          * The hash of the parent block.
@@ -83,7 +83,7 @@ export class Block {
      */
     get miningReward(): number {
         // calculate block reward halving rate
-        const halvingRate = Math.floor(this.height / BLOCK_REWARD_INTERVAL);
+        const halvingRate = Math.floor(this.index / BLOCK_REWARD_INTERVAL);
 
         // calculate current block reward based on
         // initial_reward divided by 2 ** halving_rate
@@ -119,7 +119,7 @@ export class Block {
      */
     calculateHash(): string {
         return createHash(
-            this.height +
+            this.index +
                 this.parentHash +
                 this.difficulty +
                 this.nonce +
@@ -138,7 +138,7 @@ export class Block {
  * subsequent blocks can be created on it. It usually has an index of 0.
  */
 export const GENESIS_BLOCK: Readonly<Block> = new Block(
-    /* height       */ 0,
+    /* index        */ 0,
     /* parentHash   */ '0',
     /* transactions */ [],
     /* difficulty   */ BLOCK_DIFFICULTY,
