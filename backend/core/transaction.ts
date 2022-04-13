@@ -62,6 +62,10 @@ export class Transaction {
 
     /**
      * Flag if transaction is coinbase transaction.
+     *
+     * A coinbase transaction is a transaction that sends coins to the network.
+     * It is created by the node for mining rewards and transaction fees.
+     * It doesn't have a sender address and signature.
      */
     get isCoinbase(): boolean {
         return this.from === ROOT_ADDRESS && !this.signature;
