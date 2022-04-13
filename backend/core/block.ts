@@ -8,9 +8,9 @@ import { createHash } from '../utils';
 
 export class Block {
     /**
-     * The unique hash string representing the block.
+     * Cached values for lazy-loaded getters.
      */
-    public hash: string;
+    #cachedHash?: string;
 
     constructor(
         /**
@@ -48,10 +48,7 @@ export class Block {
          * The timestamp on which the block was created.
          */
         public timestamp: number = Date.now()
-    ) {
-        // set calculated hash
-        this.hash = this.calculateHash();
-    }
+    ) {}
 
     /**
      * Sum of all transaction fees in the block.
@@ -115,17 +112,31 @@ export class Block {
     }
 
     /**
-     * Calculate the hash of the block.
+     * Unique hash string representing the block.
      */
-    calculateHash(): string {
+    get hash(): string {
+        return (this.#cachedHash ??= this.createHash());
+    }
+
+    /**
+     * Create a computed hash string for the block.
+     */
+    createHash(): string {
         return createHash(
             this.index +
                 this.parentHash +
                 this.difficulty +
                 this.nonce +
-                this.timestamp +
-                this.transactions.map((t) => t.hash).join('')
+                this.transactions.map((t) => t.hash).join('') +
+                this.timestamp
         );
+    }
+
+    /**
+     * Reset cached hash value.
+     */
+    resetHash(): void {
+        this.#cachedHash = undefined;
     }
 }
 

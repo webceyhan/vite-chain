@@ -280,8 +280,8 @@ export class Chain {
             // increment nonce
             block.nonce++;
 
-            // recalculate hash
-            block.hash = block.calculateHash();
+            // reset hash to recalculate
+            block.resetHash();
         }
     }
 
