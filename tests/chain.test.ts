@@ -1,8 +1,6 @@
 import { Block, Chain } from '../backend/core';
-import { Wallet } from '../backend/wallet';
 
-const miner = Wallet.import();
-const chain = new Chain(miner.address);
+const chain = new Chain();
 
 describe('Chain with defaults', () => {
     test('has size of 1', () => {
@@ -37,6 +35,6 @@ describe('Chain with defaults', () => {
     });
 
     test('should be equal to another with same params', () => {
-        expect(chain).toEqual(new Chain(miner.address));
+        expect(chain).toEqual(new Chain());
     });
 });
