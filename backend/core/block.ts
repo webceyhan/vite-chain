@@ -3,6 +3,11 @@ import { createHash } from '../utils';
 
 export class Block {
     /**
+     * Difficulty level for proof-of-work mechanism
+     */
+    static readonly DIFFICULTY = 1;
+
+    /**
      * Initial mining reward per block.
      *
      * Original block reward for miners was 50 BTC.
@@ -19,6 +24,14 @@ export class Block {
      * around every 4 years with a 10 minute block interval
      */
     static readonly REWARD_HALVING_INTERVAL = 100;
+
+    /**
+     * Time in seconds for a block to be mined.
+     *
+     * For example, if MINING_TIME_INTERVAL is 60,
+     * then a block will be mined every 60 seconds (1 minute).
+     */
+    static readonly MINING_TIME_INTERVAL = 60;
 
     /**
      * In a blockchain, the genesis block refers to the first-ever block created on the network.
@@ -166,6 +179,9 @@ export class Block {
 
     /**
      * Reset cached hash value.
+     *
+     * This is useful when the block is modified by the nonce
+     * or difficulty during the proof-of-work process.
      */
     resetHash(): void {
         this.#cachedHash = undefined;

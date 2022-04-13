@@ -13,19 +13,6 @@ export const VERSION = 0x80;
  */
 export const COIN_SYMBOL = 'VTC';
 
-/**
- * Difficulty level for proof-of-work mechanism
- */
-export const BLOCK_DIFFICULTY = 1;
-
-/**
- * Time in seconds for a block to be mined.
- *
- * For example, if BLOCK_TIME_INTERVAL is 60,
- * then a block will be mined every 60 seconds (1 minute).
- */
-export const BLOCK_TIME_INTERVAL = 60;
-
 // NETWORK /////////////////////////////////////////////////////////////////////////////////////////
 
 /**

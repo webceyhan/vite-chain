@@ -1,4 +1,3 @@
-import { BLOCK_TIME_INTERVAL } from '../constants';
 import { Block } from './block';
 import { Transaction } from './transaction';
 import { CoinPool } from './coin';
@@ -186,7 +185,7 @@ export class Chain {
      */
     async startMiningLoop() {
         // await for interval to pass
-        await delay(BLOCK_TIME_INTERVAL);
+        await delay(Block.MINING_TIME_INTERVAL);
 
         // mine next block
         this.mineBlock();
