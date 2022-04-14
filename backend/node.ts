@@ -222,7 +222,7 @@ export class Node {
         let found: Block | undefined;
 
         // find by index
-        if (q.index) {
+        if (q.index !== undefined) {
             found = this.#chain.blocks[q.index];
         }
 
