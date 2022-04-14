@@ -20,6 +20,14 @@ export type NodeEvent =
 
 export class Node {
     /**
+     * Version code for the blockchain network.
+     *
+     * - Mainnet: 0x80
+     * - Testnet: 0xef
+     */
+    static readonly VERSION = 0x80;
+
+    /**
      * Network port to listen on.
      */
     static readonly PORT = (process.env.PORT as any) || 8080;

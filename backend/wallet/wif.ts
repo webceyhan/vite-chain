@@ -1,6 +1,6 @@
 import bs58check from 'bs58check';
-import { VERSION } from '../constants';
 import { sha256 } from '../utils';
+import { Node } from '../node';
 
 /**
  * Create checksum for a given value.
@@ -17,7 +17,7 @@ const createChecksum = (data: Buffer): Buffer =>
 export const encodeWiF = (key: string): string => {
     // add version prefix in front of the private key
     const extendedKey = Buffer.concat([
-        Buffer.from([VERSION]),
+        Buffer.from([Node.VERSION]),
         Buffer.from(key, 'hex'),
     ]);
 
