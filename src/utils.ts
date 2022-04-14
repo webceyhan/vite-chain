@@ -1,6 +1,12 @@
 import { format as timeAgoFormatter } from 'timeago.js';
 
-export const formatDate = (date: any) => new Date(date).toLocaleString();
+type Style = Intl.DateTimeFormatOptions['dateStyle'];
+
+export const formatDate = (date: any, style: Style = 'short') =>
+    new Date(date).toLocaleString('en-IN', {
+        dateStyle: style,
+        timeStyle: style,
+    });
 
 export const formatTimeAgo = (date: any) => timeAgoFormatter(date);
 
