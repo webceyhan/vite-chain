@@ -124,7 +124,7 @@ export class Chain {
         // loop through all transactions
         block.transactions.map((tx) => {
             // update coin pool
-            this.coinPool.transact(tx);
+            this.coinPool.update(tx);
 
             // add to the transaction map
             this.transactionMap.set(tx.hash, tx);

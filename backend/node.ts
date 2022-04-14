@@ -60,7 +60,7 @@ export class Node {
         // todo: validate transaction
         try {
             // try updating the pending coin pool
-            this.#pendingCoinPool.transact(tx);
+            this.#pendingCoinPool.update(tx);
 
             // add to the pending transactions
             this.#pendingTransactions.push(tx);

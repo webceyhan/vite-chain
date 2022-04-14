@@ -115,9 +115,10 @@ export class CoinPool {
     }
 
     /**
-     * Transfer coins from one to another.
+     * Update coin pool with given transaction
+     * by moving coins from sender to receiver balance.
      */
-    transact(tx: Transaction): void | never {
+    update(tx: Transaction): void | never {
         // check if transaction is not coinbase
         if (!tx.isCoinbase) {
             // remove (credit) coins from sender balance
