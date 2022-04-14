@@ -20,6 +20,16 @@ export type NodeEvent =
 
 export class Node {
     /**
+     * Network port to listen on.
+     */
+    static readonly PORT = (process.env.PORT as any) || 8080;
+
+    /**
+     * Network hostname or IP address.
+     */
+    static readonly HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
+
+    /**
      * Miner wallet to collect block rewards.
      */
     readonly #miner: Wallet;

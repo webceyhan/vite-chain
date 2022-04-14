@@ -2,7 +2,6 @@ import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { PORT, HOSTNAME } from '../constants';
 import sseRouter from './routes/sse';
 import blocksRouter from './routes/blocks';
 import transactionsRouter from './routes/transactions';
@@ -29,8 +28,8 @@ export const createAPI = (node: Node) => {
     app.use('/api/wallets', walletsRouter(node));
 
     // start listening
-    server.listen(PORT, HOSTNAME, () =>
-        console.log(`server started: http://${HOSTNAME}:${PORT}`)
+    server.listen(Node.PORT, Node.HOSTNAME, () =>
+        console.log(`server started: http://${Node.HOSTNAME}:${Node.PORT}`)
     );
 
     return server;
