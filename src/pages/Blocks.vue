@@ -42,7 +42,7 @@ load(route.query);
       <ListGroupItem class="mb-2 mb-lg-0" v-for="(block, i) in blocks" :key="i" hover>
         <!-- height -->
         <div class="col-6 col-lg-2">
-          <router-link :to="{ name: 'block', params: { id: block.height } }">#{{ block.height }}</router-link>
+          <router-link :to="{ name: 'block', params: { id: block.index } }">#{{ block.index }}</router-link>
         </div>
 
         <!-- date -->
@@ -70,7 +70,7 @@ load(route.query);
         <div class="col order-lg-3">
           <span class="d-lg-none text-muted me-1">Transactions:</span>
           <router-link
-            :to="{ name: 'transactions', query: { block: block.height } }"
+            :to="{ name: 'transactions', query: { block: block.index } }"
           >{{ block.transactions.length }}</router-link>
         </div>
 

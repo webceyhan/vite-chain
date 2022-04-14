@@ -28,7 +28,7 @@ watch(() => route.params.id, (id) => id && loadOne(id));
       <!-- height -->
       <ListGroupItem>
         <template #label>Height:</template>
-        <template #value>#{{ block.height }}</template>
+        <template #value>#{{ block.index }}</template>
       </ListGroupItem>
 
       <!-- timestamp -->
@@ -48,7 +48,7 @@ watch(() => route.params.id, (id) => id && loadOne(id));
         <template #value>
           <router-link
             class="me-1"
-            :to="{ name: 'transactions', query: { block: block.height } }"
+            :to="{ name: 'transactions', query: { block: block.index } }"
           >{{ block.transactions.length }}</router-link>transactions in this block
         </template>
       </ListGroupItem>
@@ -64,8 +64,8 @@ watch(() => route.params.id, (id) => id && loadOne(id));
         <template #label>Parent Hash:</template>
         <template #value>
           <router-link
-            v-if="block.height > 0"
-            :to="{ name: 'block', params: { id: block.height - 1 } }"
+            v-if="block.index > 0"
+            :to="{ name: 'block', params: { id: block.index - 1 } }"
           >{{ block.parentHash }}</router-link>
           <span v-else>{{ block.parentHash }}</span>
         </template>

@@ -30,8 +30,8 @@ defineProps({
             <div class="col-7">
                 <span class="me-1">Block</span>
                 <router-link
-                    :to="{ name: 'block', params: { id: block.height } }"
-                >{{ block.height }}</router-link>
+                    :to="{ name: 'block', params: { id: block.index } }"
+                >{{ block.index }}</router-link>
             </div>
 
             <!-- timestamp -->
@@ -45,7 +45,7 @@ defineProps({
             <div class="col-7 small">
                 <span class="me-1 text-muted">Includes</span>
                 <router-link
-                    :to="{ name: 'transactions', query: { block: block.height } }"
+                    :to="{ name: 'transactions', query: { block: block.index } }"
                 >{{ block.txCount }} Txns</router-link>
             </div>
 

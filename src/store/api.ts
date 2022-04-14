@@ -19,7 +19,7 @@ export interface Transaction {
 }
 
 export interface Block {
-    height: number;
+    index: number;
     hash: string;
     parentHash: string;
     difficulty: number;
@@ -50,8 +50,8 @@ export const createSSE = (path: string) =>
 
 export const findBlocks = async (q: {}) => fetchApi<Block[]>('blocks', q);
 
-export const findBlock = async (height: number) =>
-    fetchApi<Block>(`blocks/${height}`);
+export const findBlock = async (index: number) =>
+    fetchApi<Block>(`blocks/${index}`);
 
 export const findTransactions = async (q: {}) =>
     fetchApi<Transaction[]>('transactions', q);
