@@ -1,5 +1,5 @@
 import bs58check from 'bs58check';
-import { COIN_SYMBOL } from '../constants';
+import { Chain } from '../core';
 
 /**
  * todo: find browser support for bs58check library.
@@ -12,7 +12,7 @@ const TESTNET = true;
 /**
  * Prefix of the addres string (2 characters).
  */
-const PREFIX = COIN_SYMBOL.toLowerCase().slice(0, -1);
+const PREFIX = Chain.SYMBOL.toLowerCase().slice(0, -1);
 
 /**
  * Convert a hexadecimal public key to a compressed address string.

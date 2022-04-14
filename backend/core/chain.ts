@@ -4,6 +4,11 @@ import { Transaction } from './transaction';
 
 export class Chain {
     /**
+     * Coin symbol of the chain.
+     */
+    static readonly SYMBOL = 'VTC';
+
+    /**
      * The chain of blocks starting from the genesis block.
      */
     readonly blocks: Block[] = [Block.GENESIS];

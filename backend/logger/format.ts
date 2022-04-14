@@ -1,5 +1,5 @@
-import { COIN_SYMBOL } from '../constants';
 import { magenta, green, blue, yellow, grey } from 'Chalk';
+import { Chain } from '../core';
 
 /**
  * Format title to be displayed.
@@ -34,5 +34,5 @@ export const formatCoin = (coin: number) =>
         new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' })
             .format(coin)
             .replace(/\$/, '')
-            .concat(` ${COIN_SYMBOL}`)
+            .concat(` ${Chain.SYMBOL}`)
     );
