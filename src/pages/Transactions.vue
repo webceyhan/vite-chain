@@ -70,7 +70,8 @@ load(route.query);
         <!-- from -->
         <div class="col-7 col-lg-2 text-truncate order-0">
           <span class="d-lg-none text-muted me-1">From:</span>
-          <router-link :to="{ name: 'wallet', params: { address: tx.from } }">{{ tx.from }}</router-link>
+          <span v-if="tx.from === '0'">{{ tx.from }}</span>
+          <router-link v-else :to="{ name: 'wallet', params: { address: tx.from } }">{{ tx.from }}</router-link>
         </div>
 
         <!-- to -->
