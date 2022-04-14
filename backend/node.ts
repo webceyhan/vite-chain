@@ -2,6 +2,13 @@ import EventEmitter from 'events';
 import { Block, Chain, CoinPool, Transaction } from './core';
 import { Wallet } from './wallet';
 import { delay } from './utils';
+import {
+    BlockJSON,
+    serializeBlock,
+    serializeTransaction,
+    TransactionJSON,
+    WalletJSON,
+} from './serialization';
 
 export type NodeEvent =
     | 'chain:updated'
@@ -186,5 +193,118 @@ export class Node {
      */
     off(eventName: NodeEvent, listener: (...args: any[]) => void): void {
         this.#emitter.off(eventName, listener);
+    }
+
+    // QUERY METHODS ///////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Find a block by query.
+     */
+    findBlock(q: { index?: number; hash?: string }): BlockJSON | never {
+        let found: Block | undefined;
+
+        // find by index
+        if (q.index) {
+            found = this.#chain.blocks[q.index];
+        }
+
+        // find by hash
+        if (q.hash) {
+            found = this.#chain.blocks.find((block) => block.hash === q.hash);
+        }
+
+        // throw error if not found
+        if (!found) {
+            throw new Error('Block not found');
+        }
+
+        return serializeBlock(found);
+    }
+
+    /**
+     * Find all blocks by query.
+     */
+    findBlocks(q?: {}): BlockJSON[] {
+        return this.#chain.blocks.map(serializeBlock);
+    }
+
+    /**
+     * Find a transaction by query.
+     */
+    findTransaction(q: { hash: string }): TransactionJSON | never {
+        let found: Transaction | undefined;
+
+        // find by hash
+        found = this.#chain.transactionMap.get(q.hash);
+
+        // throw error if not found
+        if (!found) {
+            throw new Error('Transaction not found');
+        }
+
+        return serializeTransaction(found);
+    }
+
+    /**
+     * Find all transactions by query.
+     */
+    findTransactions(q?: {
+        block?: number;
+        pending?: boolean;
+        address?: string;
+    }): TransactionJSON[] {
+        // find by block index
+        if (q?.block) {
+            return this.findBlock({ index: q.block }).transactions;
+        }
+
+        // find by pending
+        if (q?.pending) {
+            return this.#pendingTransactions.map(serializeTransaction);
+        }
+
+        // find by address
+        if (q?.address) {
+            const found: TransactionJSON[] = [];
+            this.#chain.transactionMap.forEach((tx) => {
+                if (tx.from === q.address) found.push(serializeTransaction(tx));
+                if (tx.to === q.address) found.push(serializeTransaction(tx));
+            });
+            return found;
+        }
+
+        // return all transactions from last block
+        return this.#chain.lastBlock.transactions.map(serializeTransaction);
+    }
+
+    /**
+     * Find wallet by query.
+     */
+    findWallet(q: { address: string }): WalletJSON | never {
+        // check if wallet by address exists
+        const found = this.#chain.coinPool.has(q.address);
+
+        // throw error if not found
+        if (!found) {
+            throw new Error('Wallet not found');
+        }
+
+        return <WalletJSON>{
+            address: q.address,
+            balance: this.#chain.coinPool.getBalance(q.address),
+            transactions: this.findTransactions({ address: q.address }),
+        };
+    }
+
+    /**
+     * Find all wallets by query.
+     */
+    findWallets(q?: {}): WalletJSON[] {
+        return this.#chain.coinPool.coins.map((coin) => ({
+            address: coin.key,
+            balance: coin.amount,
+            // todo: add transactions
+            transactions: [],
+        }));
     }
 }

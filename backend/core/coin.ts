@@ -76,6 +76,13 @@ export class CoinPool {
     }
 
     /**
+     * Check if key exists in the pool.
+     */
+    has(key: string): boolean {
+        return this.pool.has(key);
+    }
+
+    /**
      * Get coin balance of a key or 0 if not found.
      */
     getBalance(key: string): number {

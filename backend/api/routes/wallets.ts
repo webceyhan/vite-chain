@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { Node } from '../../node';
-import { serializeTransaction } from '../../serialization';
 
 export default (node: Node) => {
     // define router
@@ -10,12 +9,7 @@ export default (node: Node) => {
      * Get all addresses.
      */
     router.get('/', (req, res) => {
-        res.json(
-            node.chain.addresses.map((address) => ({
-                address,
-                balance: node.chain.findBalance(address),
-            }))
-        );
+        res.json(node.findWallets());
     });
 
     /**
@@ -27,13 +21,7 @@ export default (node: Node) => {
 
         try {
             // try to find wallet info
-            res.json({
-                address,
-                balance: node.chain.findBalance(address),
-                transactions: node.chain
-                    .findTransactionsByAddress(address)
-                    .map(serializeTransaction),
-            });
+            res.json(node.findWallet({ address }));
         } catch (error) {
             res.status(404).json((error as Error).message);
         }

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { Node } from '../../node';
-import { serializeBlock } from '../../serialization';
 
 export default (node: Node) => {
     // define router
@@ -10,20 +9,19 @@ export default (node: Node) => {
      * Get all blocks.
      */
     router.get('/', (req, res) => {
-        res.json(node.chain.blocks.map(serializeBlock));
+        res.json(node.findBlocks());
     });
 
     /**
-     * Get block by height.
+     * Get block by index.
      */
-    router.get('/:height', (req, res) => {
-        // parse height param
-        const height = +req.params.height;
+    router.get('/:index', (req, res) => {
+        // parse index param
+        const index = +req.params.index;
 
         try {
             // try to find block by height
-            const block = node.chain.findBlockByHeight(height);
-            res.json(serializeBlock(block));
+            res.json(node.findBlock({ index }));
         } catch (error) {
             res.status(404).json((error as Error).message);
         }
