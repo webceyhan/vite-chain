@@ -28,14 +28,14 @@ export class Node {
     static readonly VERSION = 0x80;
 
     /**
-     * Network port to listen on.
+     * Default network port to listen on.
      */
-    static readonly PORT = (process.env.PORT as any) || 8080;
+    static readonly PORT = 8080;
 
     /**
-     * Network hostname or IP address.
+     * Default network hostname or IP address.
      */
-    static readonly HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
+    static readonly HOSTNAME = '0.0.0.0';
 
     /**
      * Miner wallet to collect block rewards.
