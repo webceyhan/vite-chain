@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <ListGroup class="list-group-horizontal-lg">
+  <ListGroup class="list-group-horizontal-lg mb-1">
     <ListGroupItem class="flex-fill p-lg-4">
       <div class="col-auto align-self-start">
         <Icon name="difficulty" class="h1" />
@@ -71,7 +71,7 @@ defineProps({
     </ListGroupItem>
   </ListGroup>
 
-  <ListGroup class="list-group-horizontal-lg">
+  <ListGroup class="list-group-horizontal-lg bg-primary bg-opacity-25">
     <ListGroupItem class="flex-fill p-lg-4">
       <div class="col-auto align-self-start">
         <Icon name="time" class="h1" />
@@ -79,7 +79,7 @@ defineProps({
       <div class="col">
         <small class="text-muted">Time of last block</small>
         <Placeholder :value="stats.lastBlockTimestamp">
-          <div class="display-6">
+          <div class="display-7 text-light text-opacity-75">
             <Timestamp :value="stats.lastBlockTimestamp" />
           </div>
         </Placeholder>
@@ -93,7 +93,7 @@ defineProps({
       <div class="col">
         <small class="text-muted">Total Supply</small>
         <Placeholder :value="stats.totalSupply">
-          <div class="display-6">
+          <div class="display-7 text-light text-opacity-75">
             <Currency :value="stats.totalSupply" />
           </div>
         </Placeholder>
@@ -107,7 +107,7 @@ defineProps({
       <div class="col">
         <small class="text-muted">Max Supply</small>
         <Placeholder :value="stats.maxSupply">
-          <div class="display-6">
+          <div class="display-7 text-light text-opacity-75">
             <Currency :value="stats.maxSupply" />
           </div>
         </Placeholder>
@@ -115,3 +115,9 @@ defineProps({
     </ListGroupItem>
   </ListGroup>
 </template>
+
+<style>
+.display-7 {
+  font-size: calc(1rem + 1vw);
+}
+</style>
