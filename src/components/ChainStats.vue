@@ -4,6 +4,7 @@ import ListGroup from "./common/ListGroup.vue";
 import ListGroupItem from "./common/ListGroupItem.vue";
 import Timestamp from "./common/Timestamp.vue";
 import Placeholder from "./common/Placeholder.vue";
+import Currency from "./common/Currency.vue";
 import Icon from "./common/Icon.vue";
 
 defineProps({
@@ -15,13 +16,13 @@ defineProps({
   <ListGroup class="list-group-horizontal-lg">
     <ListGroupItem class="flex-fill p-lg-4">
       <div class="col-auto align-self-start">
-        <Icon name="time" class="h1" />
+        <Icon name="difficulty" class="h1" />
       </div>
       <div class="col">
-        <small class="text-muted">Time of last block</small>
-        <Placeholder :value="stats.lastBlockTimestamp">
+        <small class="text-muted">Current Difficulty</small>
+        <Placeholder :value="stats.difficulty">
           <div class="display-6">
-            <Timestamp :value="stats.lastBlockTimestamp" />
+            <span class="h1">{{ stats.difficulty }}</span>
           </div>
         </Placeholder>
       </div>
@@ -64,6 +65,50 @@ defineProps({
         <Placeholder :value="stats.totalWallets">
           <div class="display-6">
             <span class="h1">{{ stats.totalWallets }}</span>
+          </div>
+        </Placeholder>
+      </div>
+    </ListGroupItem>
+  </ListGroup>
+
+  <ListGroup class="list-group-horizontal-lg">
+    <ListGroupItem class="flex-fill p-lg-4">
+      <div class="col-auto align-self-start">
+        <Icon name="time" class="h1" />
+      </div>
+      <div class="col">
+        <small class="text-muted">Time of last block</small>
+        <Placeholder :value="stats.lastBlockTimestamp">
+          <div class="display-6">
+            <Timestamp :value="stats.lastBlockTimestamp" />
+          </div>
+        </Placeholder>
+      </div>
+    </ListGroupItem>
+
+    <ListGroupItem class="flex-fill p-lg-4">
+      <div class="col-auto align-self-start">
+        <Icon name="coin" class="h1" />
+      </div>
+      <div class="col">
+        <small class="text-muted">Total Supply</small>
+        <Placeholder :value="stats.totalSupply">
+          <div class="display-6">
+            <Currency :value="stats.totalSupply" />
+          </div>
+        </Placeholder>
+      </div>
+    </ListGroupItem>
+
+    <ListGroupItem class="flex-fill p-lg-4">
+      <div class="col-auto align-self-start">
+        <Icon name="coin" class="h1" />
+      </div>
+      <div class="col">
+        <small class="text-muted">Max Supply</small>
+        <Placeholder :value="stats.maxSupply">
+          <div class="display-6">
+            <Currency :value="stats.maxSupply" />
           </div>
         </Placeholder>
       </div>

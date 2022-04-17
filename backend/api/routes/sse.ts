@@ -19,6 +19,9 @@ export default (node: Node) => {
                 totalWallets: chain.addressSize,
                 totalTransactions: chain.transactionSize,
                 lastBlockTimestamp: chain.lastBlock.timestamp,
+                totalSupply: chain.totalSupply,
+                maxSupply: chain.maxSupply,
+                difficulty: chain.difficulty,
             });
 
         node.on('chain:updated', handler);

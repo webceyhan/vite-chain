@@ -5,6 +5,9 @@ export interface Chain {
     totalWallets: number;
     totalTransactions: number;
     lastBlockTimestamp: number;
+    totalSupply: number;
+    maxSupply: number;
+    difficulty: number;
 }
 
 export interface Transaction {
