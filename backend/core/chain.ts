@@ -67,7 +67,7 @@ export class Chain {
      * Next block to be mined.
      */
     get nextBlock(): Block {
-        return new Block(this.size, this.lastBlock.hash);
+        return new Block(this.size, this.lastBlock.hash, [], this.difficulty);
     }
 
     /**
@@ -75,13 +75,6 @@ export class Chain {
      */
     get addresses(): string[] {
         return this.coinPool.keys;
-    }
-
-    /**
-     * Current block difficulty.
-     */
-    get difficulty(): number {
-        return this.lastBlock.difficulty;
     }
 
     /**
@@ -106,6 +99,48 @@ export class Chain {
         }
 
         return total;
+    }
+
+    /**
+     * Current block difficulty.
+     */
+    get difficulty(): number {
+        // extract index, difficulty from last block
+        const { index, difficulty } = this.lastBlock;
+
+        // define flag to check if difficulty adjustment is needed
+        // if index is greater than zero (not genesis block)
+        // and index is a multiple of DIFFICULTY_ADJUSTMENT_INTERVAL
+        const canAdjust =
+            index > 0 && index % Block.DIFFICULTY_ADJUSTMENT_INTERVAL === 0;
+
+        // return adjusted difficulty if needed
+        return canAdjust ? this.#adjustedDifficulty : difficulty;
+    }
+
+    /**
+     * Adjusted difficulty based on the current block index.
+     */
+    get #adjustedDifficulty(): number {
+        // extract difficulty, timestamp from last adjusted block
+        const { difficulty, timestamp } =
+            this.blocks[this.size - Block.DIFFICULTY_ADJUSTMENT_INTERVAL];
+
+        // calculate the expected time to mine the next block
+        const timeExpected =
+            Block.MINING_TIME_INTERVAL *
+            Block.DIFFICULTY_ADJUSTMENT_INTERVAL *
+            1000; // convert to milliseconds
+
+        // calculate time difference between current and last adjusted block
+        const timeTaken = this.lastBlock.timestamp - timestamp;
+
+        // increase difficulty if taken time was too quick
+        if (timeTaken < timeExpected / 2) return difficulty + 1;
+        // decrease difficulty if taken time was too slow (no below zero)
+        else if (timeTaken > timeExpected * 2) return (difficulty || 1) - 1;
+        // return difficulty if time was just right
+        else return difficulty;
     }
 
     /**

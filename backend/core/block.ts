@@ -3,11 +3,6 @@ import { createHash } from '../utils';
 
 export class Block {
     /**
-     * Difficulty level for proof-of-work mechanism
-     */
-    static readonly DIFFICULTY = 1;
-
-    /**
      * Initial mining reward per block.
      *
      * Original block reward for miners was 50 BTC.
@@ -32,6 +27,14 @@ export class Block {
      * then a block will be mined every 60 seconds (1 minute).
      */
     static readonly MINING_TIME_INTERVAL = 60;
+
+    /**
+     * Number of blocks to adjust difficulty level.
+     *
+     * This is used to adjust the difficulty level of the next block to be mined.
+     * Difficulty level is adjusted by a factor of 2 every N blocks.
+     */
+    static readonly DIFFICULTY_ADJUSTMENT_INTERVAL = 10;
 
     /**
      * In a blockchain, the genesis block refers to the first-ever block created on the network.
