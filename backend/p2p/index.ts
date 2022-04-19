@@ -8,7 +8,7 @@ export const createP2PServer = async (node: Node, server: Server) => {
     const wss = new WebSocketServer({ server });
 
     // log server start message
-    console.log(`p2p server started: ws://${node.address}`);
+    console.log(`P2P server started: ws://${node.address}`);
 
     // listen for new peer connections
     wss.on('connection', (ws: WebSocket) => {
