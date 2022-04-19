@@ -1,30 +1,28 @@
 <script setup lang="ts">
-
-import { WebWallet } from '../WebWallet'
-import { computed, ref } from 'vue';
-import { useWallets } from '../store/wallets';
-import ListGroup from '../components/common/ListGroup.vue';
-import ListGroupItem from '../components/common/ListGroupItem.vue';
-import TransactionList from '../components/TransactionList.vue';
-import Currency from '../components/common/Currency.vue';
-import Icon from '../components/common/Icon.vue';
+import { WebWallet } from "../WebWallet";
+import { computed, ref } from "vue";
+import { useWallets } from "../store/wallets";
+import ListGroup from "../components/common/ListGroup.vue";
+import ListGroupItem from "../components/common/ListGroupItem.vue";
+import TransactionList from "../components/TransactionList.vue";
+import Currency from "../components/common/Currency.vue";
+import Icon from "../components/common/Icon.vue";
 
 const { wallet, loadOne, transfer } = useWallets();
 
 // demo wallet private key
-const demoKey = '633d6bee776c7b54359bf56c5c0767f859c49345f9dac5aef5fd8d1d1a0bb616';
+const demoKey = "633d6bee776c7b54359bf56c5c0767f859c49345f9dac5aef5fd8d1d1a0bb616";
 
 // define key-pair and address
 let walletObj: WebWallet;
 
 // define key form (defaults to local storage)
-const keyForm = ref(localStorage.getItem('key') ?? demoKey);
+const keyForm = ref(localStorage.getItem("key") ?? demoKey);
 
 // define tx form
-const txForm = ref({ to: '', amount: 0 })
+const txForm = ref({ to: "", amount: 0 });
 
-const canTransfer = computed(() =>
-  (txForm.value.to != '' && txForm.value.amount > 0));
+const canTransfer = computed(() => txForm.value.to != "" && txForm.value.amount > 0);
 
 function onLogin() {
   // initialize wallet object
@@ -34,7 +32,7 @@ function onLogin() {
   loadOne(walletObj.address);
 
   // store private key in local storage
-  localStorage.setItem('key', keyForm.value);
+  localStorage.setItem("key", keyForm.value);
 }
 
 function onTransfer() {
@@ -42,16 +40,13 @@ function onTransfer() {
   const { to, amount } = txForm.value;
 
   // create and transfer signed tx object
-  // transfer({ ...walletObj.transact(to, amount) });
+  transfer({ ...walletObj.transact(to, amount) });
 }
-
 </script>
 
 <template>
   <section>
-    <h2 class="mb-4">
-      <Icon name="wallet" class="me-2" />My Wallet
-    </h2>
+    <h2 class="mb-4"><Icon name="wallet" class="me-2" />My Wallet</h2>
 
     <!-- login form -->
     <div class="row" v-if="!wallet">
@@ -77,7 +72,8 @@ function onTransfer() {
           <ListGroupItem>
             <template #label>Transactions:</template>
             <template #value>
-              <a href="#">{{ wallet.transactions.length }}</a> transactions of this wallet.
+              <a href="#">{{ wallet.transactions.length }}</a> transactions of this
+              wallet.
             </template>
           </ListGroupItem>
 
@@ -100,24 +96,44 @@ function onTransfer() {
             <form @submit.prevent="onTransfer">
               <div class="mb-3">
                 <label for="to" class="form-label">To</label>
-                <textarea id="to" class="form-control" v-model="txForm.to" rows="3" required></textarea>
+                <textarea
+                  id="to"
+                  class="form-control"
+                  v-model="txForm.to"
+                  rows="3"
+                  required
+                ></textarea>
               </div>
               <div class="mb-3">
                 <label for="amount" class="form-label">Amount</label>
 
                 <div class="input-group">
-                  <input id="amount" type="number" min="0" :max="wallet.balance" class="form-control"
-                    v-model.number="txForm.amount" required />
+                  <input
+                    id="amount"
+                    type="number"
+                    min="0"
+                    :max="wallet.balance"
+                    class="form-control"
+                    v-model.number="txForm.amount"
+                    required
+                  />
                   <div class="input-group-text">
                     <small>VT</small>
                   </div>
                   <div class="input-group-text">
-                    <button class="btn btn-link" type="button"
-                      @click="txForm.amount = wallet?.balance || 0">max</button>
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      @click="txForm.amount = wallet?.balance || 0"
+                    >
+                      max
+                    </button>
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn-success" :disabled="!canTransfer">Transfer</button>
+              <button type="submit" class="btn btn-success" :disabled="!canTransfer">
+                Transfer
+              </button>
             </form>
           </div>
         </div>
