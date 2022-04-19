@@ -137,4 +137,11 @@ export class CoinPool {
         // to prevent passing objects by reference
         return new CoinPool(this.coins.map((coin) => ({ ...coin })));
     }
+
+    /**
+     * Clear the coin pool.
+     */
+    clear(): void {
+        this.pool.clear();
+    }
 }

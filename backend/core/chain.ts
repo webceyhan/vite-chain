@@ -154,6 +154,23 @@ export class Chain {
     }
 
     /**
+     * Replace the chain with a new one.
+     */
+    replace(blocks: Block[]): void {
+        // clear the coin pool
+        this.coinPool.clear();
+
+        // clear the transaction map
+        this.transactionMap.clear();
+
+        // clear blocks
+        (this.blocks as any) = [];
+
+        // add new blocks to the chain
+        blocks.forEach((block) => this.addBlock(block));
+    }
+
+    /**
      * Process transactions in the block.
      *
      * This method is called after a block is added to the chain.
