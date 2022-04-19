@@ -208,20 +208,24 @@ export class Node {
      * Add new block to the blockchain.
      */
     #addBlock(block: Block): void {
-        // add block to chain
-        this.#chain.addBlock(block);
+        // todo: fix insufficient funds error
+        // to remove try-catch block
+        try {
+            // add block to chain
+            this.#chain.addBlock(block);
 
-        // emit block:added event
-        this.emit('block:added', block);
+            // emit block:added event
+            this.emit('block:added', block);
 
-        // reset pending transactions
-        this.#pendingTransactions = [];
+            // reset pending transactions
+            this.#pendingTransactions = [];
 
-        // sync pending coin pool with the chain
-        this.#pendingCoinPool = this.#chain.coinPool.clone();
+            // sync pending coin pool with the chain
+            this.#pendingCoinPool = this.#chain.coinPool.clone();
 
-        // emit supply:changed event
-        this.emit('supply:changed', this.#pendingCoinPool);
+            // emit supply:changed event
+            this.emit('supply:changed', this.#pendingCoinPool);
+        } catch (error) {}
     }
 
     // MINING //////////////////////////////////////////////////////////////////////////////////////
