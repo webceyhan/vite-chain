@@ -10,8 +10,9 @@ export const useLogger = (node: Node) => {
     });
 
     // log discarded block
-    node.on('block:discarded', (block) => {
+    node.on('block:discarded', (block, error) => {
         info('Block discarded.');
+        log(error.message);
     });
 
     // log new pending transaction
@@ -21,8 +22,9 @@ export const useLogger = (node: Node) => {
     });
 
     // log discarded transaction
-    node.on('transaction:discarded', (tx) => {
+    node.on('transaction:discarded', (tx, error) => {
         info('Pending transaction discarded.');
+        log(error.message);
     });
 
     // log supply changes
