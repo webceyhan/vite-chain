@@ -1,22 +1,23 @@
 import { Node } from './node';
-import { Chain } from './core';
-import { Wallet } from './wallet';
-import { createLogger } from './logger';
-import { createAPI } from './api';
+import { createAPIServer } from './api';
+// import { createP2PServer } from './p2p';
+import { useLogger } from './logger';
+import { useFaker } from './faker';
 
-// create miner wallet
-export const miner = new Wallet();
-
-// create blockchain instance
-export const chain = new Chain();
-
-// create blockchain node instance
-export const node = new Node(miner, chain);
-
-// create logger for node events
-export const logger = createLogger(node);
+// create blockchain node
+const node = new Node();
 
 // create API server
-export const api = createAPI(node);
+const apiServer = createAPIServer(node);
 
+// // create p2p server
+// const p2pServer = createP2PServer(node, apiServer);
+
+// log node events
+useLogger(node);
+
+// fake user transactions
+useFaker(node);
+
+// start mining
 node.startMiningLoop();

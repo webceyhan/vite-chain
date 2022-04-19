@@ -45,12 +45,12 @@ export class Node {
     /**
      * Miner wallet to collect block rewards.
      */
-    readonly #miner: Wallet;
+    readonly miner: Wallet = new Wallet();
 
     /**
      * The blockchain that the node is running on.
      */
-    readonly #chain: Chain;
+    readonly #chain: Chain = new Chain();
 
     /**
      * Internal event emitter.
@@ -67,14 +67,6 @@ export class Node {
      * Pending transactions to be added to the next block.
      */
     #pendingTransactions: Transaction[] = [];
-
-    constructor(miner: Wallet, chain: Chain) {
-        // set miner wallet
-        this.#miner = miner;
-
-        // set blockchain
-        this.#chain = chain;
-    }
 
     /**
      * Flag to indicate if the node is master.
@@ -197,7 +189,7 @@ export class Node {
         // create coinbase transaction
         const coinbaseTx = new Transaction(
             '0', // root address
-            this.#miner.address,
+            this.miner.address,
             block.reward
         );
 

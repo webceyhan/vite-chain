@@ -1,4 +1,4 @@
-import { createServer } from 'http';
+import { createServer, Server } from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -8,23 +8,15 @@ import transactionsRouter from './routes/transactions';
 import walletsRouter from './routes/wallets';
 import { Node } from '../node';
 
-export type Server = ReturnType<typeof createServer> & {
-    port: number;
-    hostname: string;
-    url: string;
-};
-
-export const createAPI = (node: Node): Server => {
+export const createAPIServer = (node: Node): Server => {
     // create express app
     const app = express();
 
     // create http server
-    const server = createServer(app) as Server;
+    const server = createServer(app);
 
-    // set port, hostname and url
-    server.port = (process.env.PORT as any) ?? Node.PORT;
-    server.hostname = process.env.HOSTNAME ?? Node.HOSTNAME;
-    server.url = `http://${server.hostname}:${server.port}`;
+    // define full url of API server
+    const url = `http://localhost:${node.port}`;
 
     // enable cors
     app.use(cors());
@@ -39,8 +31,8 @@ export const createAPI = (node: Node): Server => {
     app.use('/api/wallets', walletsRouter(node));
 
     // start listening
-    server.listen(server.port, server.hostname, () => {
-        console.log(`API server listening on ${server.url}`);
+    server.listen(node.port, () => {
+        console.log(`API server listening on ${url}`);
     });
 
     return server;

@@ -2,7 +2,7 @@ import { Node } from '../node';
 import { formatCoin } from './format';
 import { log, info } from './log';
 
-export const createLogger = (node: Node) => {
+export const useLogger = (node: Node) => {
     // log mined block
     node.on('block:mined', (block) => {
         info('New block mined.');
@@ -26,6 +26,4 @@ export const createLogger = (node: Node) => {
         info(`Total Supply changed: ${formatCoin(pool.total)}`);
         log(pool);
     });
-
-    return { log, info };
 };

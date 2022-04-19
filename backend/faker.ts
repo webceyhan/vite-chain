@@ -1,4 +1,4 @@
-import { node, miner, logger } from './main';
+import { Node } from './node';
 import { delay, random } from './utils';
 import { Wallet } from './wallet';
 
@@ -28,7 +28,7 @@ const populateWallets = async (count = 5) => {
 const randomWallet = () => wallets[random(wallets.length)];
 
 // create a random transaction
-const randomTransaction = () => {
+const randomTransaction = (miner: Wallet) => {
     const amount = random(10, 1);
     const recipient = randomWallet();
 
@@ -36,13 +36,14 @@ const randomTransaction = () => {
     return miner.transact(recipient.address, amount);
 };
 
-const createFaker = async () => {
+export const useFaker = async (node: Node) => {
+    // populate fake wallets
     await populateWallets();
 
     while (true) {
         try {
             // create random transaction
-            const tx = randomTransaction();
+            const tx = randomTransaction(node.miner);
 
             // add transaction to chain
             node.addTransaction(tx);
@@ -54,5 +55,3 @@ const createFaker = async () => {
         await delay(random(20, 10));
     }
 };
-
-createFaker();
