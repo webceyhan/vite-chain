@@ -22,12 +22,12 @@ export const validateTransaction = (tx: Transaction): void | never => {
     if (tx.type === 'coinbase') return;
 
     // fail if transaction has invalid from address
-    if (!tx.from.length || tx.from.length != 50) {
+    if (!tx.from.length || tx.from.length != 66) {
         throw new TransactionError(`Invalid sender address: ${tx.from}`);
     }
 
     // fail if transaction has invalid to address
-    if (!tx.to.length || tx.to.length != 50) {
+    if (!tx.to.length || tx.to.length != 66) {
         throw new TransactionError(`Invalid recipient address: ${tx.to}`);
     }
 
