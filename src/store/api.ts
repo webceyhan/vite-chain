@@ -1,4 +1,9 @@
-const API_URL = 'http://localhost:8080/api';
+const isDev = import.meta.env.DEV;
+const devPort = 8080 + (+location.port - 3000);
+const port = isDev ? devPort : location.port;
+
+const { protocol, hostname } = location;
+const API_URL = `${protocol}//${hostname}:${port}/api`;
 
 export interface Chain {
     totalBlocks: number;
