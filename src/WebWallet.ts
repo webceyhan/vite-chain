@@ -1,32 +1,28 @@
 import { ec } from 'elliptic';
-// import { Sha256 } from '@aws-crypto/sha256-browser';
+import { Sha256 } from '@aws-crypto/sha256-browser';
 
 const ecdsa = new ec('secp256k1');
 
-// export class BrowserTransaction {
-//     constructor(
-//         public from: string,
-//         public to: string,
-//         public amount: number,
-//         public hash: string = '',
-//         public signature: string = '',
-//         public timestamp: number = Date.now()
-//     ) {
-//         // set calculated hash in asnyc manner
-//         // because browser API doesn't support sync hashing
-//         this.calculateHash().then((hash) => (this.hash = hash));
-//     }
+export class WebTransaction {
+    constructor(
+        public from: string,
+        public to: string,
+        public amount: number,
+        public hash: string = '',
+        public signature: string = '',
+        public timestamp: number = Date.now()
+    ) {}
 
-//     /**
-//      * Calculate the hash of the transaction.
-//      */
-//     async calculateHash(): Promise<string> {
-//         const hash = new Sha256();
-//         const { from, to, amount, timestamp } = this;
-//         hash.update(from + to + amount + timestamp);
-//         return (await hash.digest()).toString();
-//     }
-// }
+    /**
+     * Calculate the hash of the transaction.
+     */
+    async calculateHash(): Promise<string> {
+        const hash = new Sha256();
+        const { from, to, amount, timestamp } = this;
+        hash.update(from + to + amount + timestamp);
+        return (await hash.digest()).toString();
+    }
+}
 
 export class WebWallet {
     public readonly address: string;
@@ -42,19 +38,22 @@ export class WebWallet {
         return this.keyPair.sign(data).toDER('hex');
     }
 
-    // /**
-    //  * Create a new transaction from the wallet.
-    //  */
-    // transact(to: string, amount: number): BrowserTransaction {
-    //     // create unsigned transaction without signature
-    //     const tx = new BrowserTransaction(this.address, to, amount);
+    /**
+     * Create a new transaction from the wallet.
+     */
+    async transact(to: string, amount: number): Promise<WebTransaction> {
+        // create unsigned transaction without signature
+        const tx = new WebTransaction(this.address, to, amount);
 
-    //     // sign transaction with wallet's private key
-    //     tx.signature = this.sign(tx.hash);
+        // calculate hash
+        tx.hash = await tx.calculateHash();
 
-    //     // return signed transaction
-    //     return tx;
-    // }
+        // sign transaction with wallet's private key
+        tx.signature = this.sign(tx.hash);
+
+        // return signed transaction
+        return tx;
+    }
 
     // STATIC METHODS //////////////////////////////////////////////////////////////////////////////
 
