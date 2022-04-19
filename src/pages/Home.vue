@@ -1,22 +1,14 @@
 <script setup lang="ts">
+import { useTickers } from "../store/tickers";
+import { onMounted, onUnmounted } from "vue";
+import ChainStats from "../components/ChainStats.vue";
+import BlockList from "../components/BlockList.vue";
+import TransactionList from "../components/TransactionList.vue";
 
-import { useTickers } from '../store/tickers';
-import { onMounted, onUnmounted } from 'vue';
-import ChainStats from '../components/ChainStats.vue';
-import BlockList from '../components/BlockList.vue';
-import TransactionList from '../components/TransactionList.vue';
-
-const {
-  connect,
-  disconnect,
-  chain,
-  latestBlocks,
-  latestTransactions
-} = useTickers();
+const { connect, disconnect, chain, latestBlocks, latestTransactions } = useTickers();
 
 onMounted(() => connect());
 onUnmounted(() => disconnect());
-
 </script>
 
 <template>
@@ -34,7 +26,7 @@ onUnmounted(() => disconnect());
 
       <!-- transactions -->
       <div class="col-12 col-lg-7">
-        <TransactionList :transactions="latestTransactions" />
+        <TransactionList :transactions="latestTransactions" pending />
       </div>
     </div>
   </section>
