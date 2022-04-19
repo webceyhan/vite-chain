@@ -23,7 +23,7 @@ export const validateBlock = (block: Block): void | never => {
     }
 
     // fail if parent hash is not valid
-    if (block.parentHash?.length != 64) {
+    if (block.parentHash?.length != 66) {
         throw new BlockError(`Invalid parent hash: ${block.parentHash}`);
     }
 
@@ -38,7 +38,7 @@ export const validateBlock = (block: Block): void | never => {
     }
 
     // fail if hash is not valid
-    if (block.hash?.length != 64) {
+    if (block.hash?.length != 66) {
         throw new BlockError(`Invalid hash: ${block.hash}`);
     }
 
