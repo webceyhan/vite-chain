@@ -4,19 +4,27 @@ import { Wallet } from './wallet';
 import { delay } from './utils';
 import {
     BlockJSON,
+    deserializeBlock,
+    deserializeTransaction,
     serializeBlock,
     serializeTransaction,
     TransactionJSON,
     WalletJSON,
 } from './serialization';
+import {
+    validateBlock,
+    validateChain,
+    validateTransaction,
+} from './validation';
 
 export type NodeEvent =
     | 'chain:updated'
     | 'block:mined'
     | 'block:added'
-    | 'supply:changed'
+    | 'block:discarded'
     | 'transaction:added'
-    | 'transaction:discarded';
+    | 'transaction:discarded'
+    | 'supply:changed';
 
 export class Node {
     /**
@@ -116,30 +124,91 @@ export class Node {
     }
 
     /**
-     * Add new transaction to the blockchain.
+     * Replace chain with the given one.
      */
-    addTransaction(tx: Transaction): void {
-        // todo: validate transaction
+    replaceChain(raw: BlockJSON[]): void {
+        // deserialize blocks
+        const blocks = raw.map(deserializeBlock);
+
+        // validate blocks
+        validateChain(blocks);
+
+        // replace chain
+        this.#chain.replace(blocks);
+    }
+
+    /**
+     * Add new raw transaction to the blockchain.
+     */
+    addTransaction(raw: TransactionJSON): void {
         try {
-            // try updating the pending coin pool
-            this.#pendingCoinPool.update(tx);
+            // deserialize transaction
+            const tx = deserializeTransaction(raw);
 
-            // add to the pending transactions
-            this.#pendingTransactions.push(tx);
+            // validate transaction
+            validateTransaction(tx);
 
-            // emit transaction:added event
-            this.emit('transaction:added', tx);
+            // fail if transaction is already in the chain
+            if (this.#pendingTransactions.includes(tx)) {
+                throw new Error('Transaction already exists');
+            }
+
+            // add to chain
+            this.#addTransaction(tx);
         } catch (error) {
             // emit transaction:discarded event
-            this.emit('transaction:discarded', tx, error);
+            this.emit('transaction:discarded', raw, error);
         }
+    }
+
+    /**
+     * Add new raw block to the blockchain.
+     */
+    addBlock(raw: BlockJSON): void {
+        try {
+            // deserialize block
+            const block = deserializeBlock(raw);
+
+            // validate block
+            validateBlock(block);
+
+            // fail if block index is not the next one
+            if (block.index !== this.#chain.size + 1) {
+                throw new Error('Block index is not the next one');
+            }
+
+            // fail if block is already in the chain
+            if (this.#chain.blocks.includes(block)) {
+                throw new Error('Block already exists');
+            }
+
+            // add to chain
+            this.#addBlock(block);
+        } catch (error) {
+            // emit block:discarded event
+            this.emit('block:discarded', raw, error);
+        }
+    }
+
+    /**
+     * Add new transaction to the blockchain.
+     */
+    #addTransaction(tx: Transaction): void {
+        // try updating the pending coin pool
+        this.#pendingCoinPool.update(tx);
+
+        // add to the pending transactions
+        this.#pendingTransactions.push(tx);
+
+        // emit transaction:added event
+        this.emit('transaction:added', tx);
     }
 
     /**
      * Add new block to the blockchain.
      */
-    addBlock(block: Block): void {
-        // todo: validate block
+    #addBlock(block: Block): void {
+        // add block to chain
         this.#chain.addBlock(block);
 
         // emit block:added event
@@ -191,7 +260,7 @@ export class Node {
         this.emit('block:mined', block);
 
         // add block to chain
-        this.addBlock(block);
+        this.#addBlock(block);
     }
 
     /**

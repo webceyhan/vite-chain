@@ -46,7 +46,7 @@ export const useFaker = async (node: Node) => {
             const tx = randomTransaction(node.miner);
 
             // add transaction to chain
-            node.addTransaction(tx);
+            node.addTransaction({ ...tx } as any);
         } catch (error) {
             // ignore discarding errors
         }

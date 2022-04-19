@@ -9,6 +9,11 @@ export const useLogger = (node: Node) => {
         log(block);
     });
 
+    // log discarded block
+    node.on('block:discarded', (block) => {
+        info('Block discarded.');
+    });
+
     // log new pending transaction
     node.on('transaction:added', (tx) => {
         info('New pending transaction added.');
@@ -18,7 +23,6 @@ export const useLogger = (node: Node) => {
     // log discarded transaction
     node.on('transaction:discarded', (tx) => {
         info('Pending transaction discarded.');
-        log(tx);
     });
 
     // log supply changes
