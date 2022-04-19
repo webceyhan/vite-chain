@@ -32,7 +32,7 @@ export const validateChain = (blocks: Block[]): void | never => {
         }
 
         // fail if parent hash not matching the parent block
-        if (block.parentHash != parentBlock.hash) {
+        if (block.parentHash !== parentBlock.hash) {
             throw new ChainError(`Invalid parent hash: ${block.parentHash}`);
         }
 
