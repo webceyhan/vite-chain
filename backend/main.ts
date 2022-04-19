@@ -14,7 +14,7 @@ const apiServer = createAPIServer(node);
 const p2pServer = createP2PServer(node, apiServer);
 
 // log node events
-// node.isMaster && useLogger(node);
+node.isMaster && useLogger(node);
 
 // fake user transactions
 node.isMaster && useFaker(node);
