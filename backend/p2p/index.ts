@@ -15,8 +15,8 @@ export const createP2PServer = async (node: Node, server: Server) => {
         // create new peer
         const peer = Peer.create(ws, node);
 
-        // query chain size
-        peer.queryChainSize();
+        // query last block
+        peer.queryLastBlock();
 
         // log peer connected message
         console.log('peer connected:', peer.id);
