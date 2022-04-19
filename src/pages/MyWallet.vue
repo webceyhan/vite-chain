@@ -35,12 +35,12 @@ function onLogin() {
   localStorage.setItem("key", keyForm.value);
 }
 
-async function onTransfer() {
+function onTransfer() {
   // extract tx form data
   const { to, amount } = txForm.value;
 
   // create new signed transaction
-  const tx = await walletObj.transact(to, amount);
+  const tx = walletObj.transact(to, amount);
 
   // create and transfer signed tx object
   transfer({ ...tx });

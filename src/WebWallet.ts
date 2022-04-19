@@ -1,5 +1,5 @@
 import { ec } from 'elliptic';
-import { Sha256 } from '@aws-crypto/sha256-browser';
+import { SHA256, enc } from 'crypto-js';
 
 const ecdsa = new ec('secp256k1');
 
@@ -11,16 +11,16 @@ export class WebTransaction {
         public hash: string = '',
         public signature: string = '',
         public timestamp: number = Date.now()
-    ) {}
+    ) {
+        this.hash = this.calculateHash();
+    }
 
     /**
      * Calculate the hash of the transaction.
      */
-    async calculateHash(): Promise<string> {
-        const hash = new Sha256();
+    calculateHash(): string {
         const { from, to, amount, timestamp } = this;
-        hash.update(from + to + amount + timestamp);
-        return (await hash.digest()).toString();
+        return '0x' + SHA256(from + to + amount + timestamp).toString(enc.Hex);
     }
 }
 
@@ -41,12 +41,9 @@ export class WebWallet {
     /**
      * Create a new transaction from the wallet.
      */
-    async transact(to: string, amount: number): Promise<WebTransaction> {
+    transact(to: string, amount: number): WebTransaction {
         // create unsigned transaction without signature
         const tx = new WebTransaction(this.address, to, amount);
-
-        // calculate hash
-        tx.hash = await tx.calculateHash();
 
         // sign transaction with wallet's private key
         tx.signature = this.sign(tx.hash);
