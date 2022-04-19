@@ -50,5 +50,17 @@ export default (node: Node) => {
         }
     });
 
+    /**
+     * Add new transaction.
+     */
+    router.post('/', (req, res) => {
+        try {
+            // try to create transaction
+            node.addTransaction(req.body);
+        } catch (error) {
+            // res.status(400).json((error as Error).message);
+        }
+    });
+
     return router;
 };
