@@ -25,17 +25,22 @@ export class Node {
      * - Mainnet: 0x80
      * - Testnet: 0xef
      */
-    static readonly VERSION = 0x80;
+    static readonly VERSION: number = 0x80;
 
     /**
      * Default network port to listen on.
      */
-    static readonly PORT = 8080;
+    static readonly PORT: number = 8080;
 
     /**
      * Default network hostname or IP address.
      */
-    static readonly HOSTNAME = '0.0.0.0';
+    static readonly HOSTNAME: string = '0.0.0.0';
+
+    /**
+     * Network port to listen on.
+     */
+    readonly port: number = (process.env.PORT as any) || Node.PORT;
 
     /**
      * Miner wallet to collect block rewards.
@@ -69,6 +74,41 @@ export class Node {
 
         // set blockchain
         this.#chain = chain;
+    }
+
+    /**
+     * Flag to indicate if the node is master.
+     */
+    get isMaster(): boolean {
+        return this.port === Node.PORT;
+    }
+
+    /**
+     * Chain size.
+     */
+    get chainSize(): number {
+        return this.#chain.size;
+    }
+
+    /**
+     * Blocks in the chain.
+     */
+    get blocks(): BlockJSON[] {
+        return this.#chain.blocks.map(serializeBlock);
+    }
+
+    /**
+     * Last block in the chain.
+     */
+    get lastBlock(): BlockJSON {
+        return serializeBlock(this.#chain.lastBlock);
+    }
+
+    /**
+     * Pending transactions.
+     */
+    get pendingTransactions(): TransactionJSON[] {
+        return this.#pendingTransactions.map(serializeTransaction);
     }
 
     /**
