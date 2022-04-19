@@ -1,6 +1,6 @@
 import { Node } from './node';
 import { createAPIServer } from './api';
-// import { createP2PServer } from './p2p';
+import { createP2PServer } from './p2p';
 import { useLogger } from './logger';
 import { useFaker } from './faker';
 
@@ -11,13 +11,13 @@ const node = new Node();
 const apiServer = createAPIServer(node);
 
 // // create p2p server
-// const p2pServer = createP2PServer(node, apiServer);
+const p2pServer = createP2PServer(node, apiServer);
 
 // log node events
-useLogger(node);
+// node.isMaster && useLogger(node);
 
 // fake user transactions
-useFaker(node);
+node.isMaster && useFaker(node);
 
 // start mining
 node.startMiningLoop();
