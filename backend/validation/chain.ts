@@ -8,6 +8,11 @@ export class ChainError extends Error {}
  * Validate chain.
  */
 export const validateChain = (blocks: Block[]): void | never => {
+    // fail if chain is empty
+    if (blocks.length === 0) {
+        throw new ChainError('chain is empty');
+    }
+
     // fail if the first block in the chain is not matching
     // against the genesis block in string comparison
     if (!compare(blocks[0], Block.GENESIS)) {
@@ -19,7 +24,7 @@ export const validateChain = (blocks: Block[]): void | never => {
     // loop over the entire chain and check for its validity.
     blocks.slice(1).forEach((block, index) => {
         // get parent block to compare against
-        const parentBlock = blocks[index - 1];
+        const parentBlock = blocks[index];
 
         // fail if index not following the parent block
         if (block.index !== parentBlock.index + 1) {
