@@ -28,14 +28,19 @@ export class Node {
     static readonly VERSION: number = 0x80;
 
     /**
-     * Default network port to listen on.
+     * Network port of master node.
      */
     static readonly PORT: number = 8080;
 
     /**
-     * Default network hostname or IP address.
+     * Network hostname of master node.
      */
     static readonly HOSTNAME: string = '0.0.0.0';
+
+    /**
+     * Network address of master node.
+     */
+    static readonly ADDRESS = `${Node.HOSTNAME}:${Node.PORT}`;
 
     /**
      * Network port to listen on.
@@ -73,6 +78,13 @@ export class Node {
      */
     get isMaster(): boolean {
         return this.port === Node.PORT;
+    }
+
+    /**
+     * Address of the node.
+     */
+    get address(): string {
+        return `${Node.HOSTNAME}:${this.port}`;
     }
 
     /**

@@ -16,7 +16,7 @@ export const createAPIServer = (node: Node): Server => {
     const server = createServer(app);
 
     // define full url of API server
-    const url = `http://localhost:${node.port}`;
+    const url = `http://${node.address}`;
 
     // enable cors
     app.use(cors());
