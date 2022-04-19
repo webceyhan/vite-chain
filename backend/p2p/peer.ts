@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import { WebSocket, RawData } from 'ws';
-import { deserializeBlock, deserializeTransaction } from '../serialization';
 import { MessageName, parseMessage, serializeMessage } from './message';
 import { Node } from '../node';
 
@@ -51,31 +50,32 @@ export class Peer {
         console.log('message received:', name);
 
         switch (name) {
-            case 'newTransaction':
-                const tx = deserializeTransaction(data);
-                this.node.addTransaction(tx);
-                break;
-
-            case 'newBlock':
-                const block = deserializeBlock(data);
-                this.node.addBlock(block);
-                break;
-
-            case 'queryChainSize':
-                this.responseChainSize();
-                break;
-
             case 'queryChain':
-                this.responseChain();
-                break;
+                return this.responseChain();
 
             case 'queryLastBlock':
-                this.responseLastBlock();
-                break;
+                return this.responseLastBlock();
 
             case 'queryTransactions':
-                this.responseTransactions();
-                break;
+                return this.responseTransactions();
+
+            case 'newTransaction':
+                return this.node.addTransaction(data);
+
+            case 'newBlock':
+            case 'responseLastBlock': {
+                const { index, hash } = this.node.lastBlock;
+
+                // check if block is ahead of current chain
+                if (data.parentHash === hash && data.index > index) {
+                    return this.node.addBlock(data);
+                } else {
+                    return this.queryChain();
+                }
+            }
+
+            case 'responseChain':
+                return this.node.replaceChain(data);
         }
     }
 
@@ -102,10 +102,6 @@ export class Peer {
 
     // MESSAGES ////////////////////////////////////////////////////////////////////////////////////
 
-    queryChainSize() {
-        this.send('queryChainSize');
-    }
-
     queryChain() {
         this.send('queryChain');
     }
@@ -116,10 +112,6 @@ export class Peer {
 
     queryTransactions() {
         this.send('queryTransactions');
-    }
-
-    responseChainSize() {
-        this.send('responseChainSize', this.node.chainSize);
     }
 
     responseChain() {
