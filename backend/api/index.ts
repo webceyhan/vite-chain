@@ -34,7 +34,7 @@ export const createAPIServer = (node: Node): Server => {
     app.use(express.static(__dirname + '/../frontend'));
 
     // define catch-all route for app
-    app.get('*', (req, res) => res.sendFile('index.html', { root: 'public' }));
+    app.get('*', (req, res) => res.sendFile('index.html', { root: 'frontend' }));
 
     // start listening
     server.listen(node.port, () => {
