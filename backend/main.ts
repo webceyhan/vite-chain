@@ -1,7 +1,7 @@
 import { Node } from './node';
 import { createAPIServer } from './api';
 import { createP2PServer } from './p2p';
-import { useLogger } from './logger';
+// import { useLogger } from './logger';
 import { useFaker } from './faker';
 
 // create blockchain node
@@ -14,7 +14,7 @@ const apiServer = createAPIServer(node);
 const p2pServer = createP2PServer(node, apiServer);
 
 // log node events
-node.isMaster && useLogger(node);
+// node.isMaster && useLogger(node);
 
 // fake user transactions
 node.isMaster && useFaker(node);
