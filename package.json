@@ -2,6 +2,17 @@
   "name": "vite-chain",
   "private": true,
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webceyhan/vite-chain.git"
+  },
+  "keywords": [],
+  "author": "Evren Ceyhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webceyhan/vite-chain/issues"
+  },
+  "homepage": "https://github.com/webceyhan/vite-chain#readme",
   "scripts": {
     "start": "ts-node --project backend/tsconfig.json backend/main.ts",
     "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\" ",
