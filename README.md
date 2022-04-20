@@ -32,6 +32,72 @@ Client can fetch real-time blockchain data using SSE (Server-Sent Events) to sho
 [@webceyhan](https://twitter.com/webceyhan)
 
 <br>
+<!-- BLOCKCHAIN /////////////////////////////////////////////////////// -->
+
+## Blockchain Concepts and Architecture
+
+-   Core architecture:
+    -   **Chain**: Collection of blocks.
+    -   **Block**: A piece of data that is stored in the blockchain.
+    -   **Transaction**: A record to transfer funds from one account to another.
+    -   **CoinPool**: A pool that keeps track of the total amount of coins associated with each account in the blockchain.
+-   Network:
+    -   **P2P**: A network of computers (peers) that can communicate with each other without a central server.
+    -   **Rest API**: A way to access blockchain data from public (wallets, dapps, blockchain explorers, etc.)
+        -   **Explorer**: A way to visualize the blockchain on the web.
+        -   **Wallet**: A digital wallet that stores and manages your funds.
+
+### Chain
+
+Chain is a collection of blocks that are linked together.
+
+It keeps track of the history of transactions, current state of the CoinPool (amount of coins in circulation), and the current state of the blockchain.
+
+It contains the logic to create a new block, process transactions of the block, update / replace the state of the blockchain, calculate the current block difficulty and max supply of coins.
+
+For the simplicity of the demo, i don't use UTXO (Unspent Transaction Output) model.
+Instead, CoinPool is used to keep track of the amount of coins in circulation.
+
+### Block
+
+A block is a piece of data that is stored in the blockchain in a chainable way.
+It contains the index number, the hash of the previous block, the hash of the block itself, a list of transactions, difficulty, nonce, and a timestamp.
+
+Every block is linked to the previous block by the hash of the previous block.
+Block index is a sequential number that starts from 0 (the genesis block).
+
+### Transaction
+
+In ViteChain, there are 2 type of transactions:
+
+1. Transfer transaction:
+   When a user transfers funds to another user, a transfer transaction is created.
+   Sender has to sign the transaction and send it to the blockchain.
+   After transaction is verified using signature and public key of the sender,
+   it will be added to the blockchain (confirmed).
+
+2. Coinbase transaction:
+   When a new block is created, a coinbase transaction is created by the node that mines the block. It is a special transaction that is used to reward miners.
+   The amount is a sum of transaction fees and mining reward of that block.
+
+### Wallet
+
+A wallet is a set of private and public keys that are used to sign transactions.
+It also contains the address of the wallet which is derived from the public key using base58Check encoding and prefixed with 'vt' (referred to the first 2 characters of VTC ViteChain Coin).
+
+You can create a new wallet with random keys or import a wallet from a private key in different formats such as WiF, mnemonic, raw private key, etc.
+
+In this demo, we use raw private key or WiF (Wallet Import Format) to export / import a wallet.
+
+### Node
+
+Node is a computer that runs on a server and is responsible for storing and retrieving data from the blockchain.
+
+It tries to keep the blockchain in sync with other nodes, while trying to mine new blocks and reward the miner that runs the node.
+
+During the mining process, the node will try to find a valid block that satisfies the difficulty requirement using the proof of work algorithm. If a valid block is found, it will be added to the blockchain with pending transactions.
+
+<br>
 <!-- REQUIREMENTS /////////////////////////////////////////////////////// -->
 
 ## Requirements
