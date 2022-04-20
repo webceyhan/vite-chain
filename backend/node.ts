@@ -28,6 +28,11 @@ export type NodeEvent =
 
 export class Node {
     /**
+     * Flag to indicate if the node works in production mode.
+     */
+    static readonly IS_PROD = process.env.NODE_ENV === 'production';
+
+    /**
      * Version code for the blockchain network.
      *
      * - Mainnet: 0x80
@@ -85,7 +90,7 @@ export class Node {
      * Flag to indicate if the node is master.
      */
     get isMaster(): boolean {
-        return this.port === Node.PORT;
+        return !Node.IS_PROD && this.port === Node.PORT;
     }
 
     /**
