@@ -31,7 +31,7 @@ export const createAPIServer = (node: Node): Server => {
     app.use('/api/wallets', walletsRouter(node));
 
     // serve static client files
-    app.use(express.static(__dirname + '/../../dist'));
+    app.use(express.static(__dirname + '/../frontend'));
 
     // define catch-all route for app
     app.get('*', (req, res) => res.sendFile('index.html', { root: 'public' }));
