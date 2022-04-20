@@ -161,5 +161,6 @@ A GitHub Action will automatically deploy the project to Heroku on every push.
     -   [heroku-deploy](https://github.com/akhileshns/heroku-deploy@)
 -   [Mastering Bitcoin](https://www.oreilly.com/library/view/mastering-bitcoin/9781491902639/ch01.html)
     -   [Naivecoin](https://github.com/lhartikk/naivecoin)
+    -   [SavjeeCoin](https://github.com/Savjee/SavjeeCoin)
     -   [Build your own Blockchain in Javascript](https://github.com/nambrot/blockchain-in-js)
     -   [python_blockchain_app](https://github.com/satwikkansal/python_blockchain_app)
