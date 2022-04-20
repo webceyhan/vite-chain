@@ -15,6 +15,9 @@ export const createAPIServer = (node: Node): Server => {
     // create http server
     const server = createServer(app);
 
+    // define public root path
+    const wwwDir = `${__dirname}/../frontend`;
+
     // define full url of API server
     const url = `http://${node.address}`;
 
@@ -31,10 +34,10 @@ export const createAPIServer = (node: Node): Server => {
     app.use('/api/wallets', walletsRouter(node));
 
     // serve static client files
-    app.use(express.static(__dirname + '/../frontend'));
+    app.use(express.static(wwwDir));
 
     // define catch-all route for app
-    app.get('*', (req, res) => res.sendFile('index.html', { root: 'frontend' }));
+    app.get('*', (req, res) => res.sendFile('index.html', { root: wwwDir }));
 
     // start listening
     server.listen(node.port, () => {
