@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "start": "ts-node --project backend/tsconfig.json backend/main.ts",
     "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\" ",
     "dev2": "concurrently \"PORT=8081 npm run dev:backend\" \"npm:dev:frontend\" ",
     "dev:frontend": "vite",
