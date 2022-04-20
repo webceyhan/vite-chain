@@ -90,7 +90,7 @@ export class Node {
      * Flag to indicate if the node is master.
      */
     get isMaster(): boolean {
-        return !Node.IS_PROD && this.port === Node.PORT;
+        return Node.IS_PROD || this.port === Node.PORT;
     }
 
     /**
