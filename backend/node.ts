@@ -43,7 +43,7 @@ export class Node {
     /**
      * Network port of master node.
      */
-    static readonly PORT: number = 8080;
+    static readonly PORT: number = 3001;
 
     /**
      * Network hostname of master node.

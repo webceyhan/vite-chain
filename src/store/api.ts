@@ -1,5 +1,5 @@
 const isDev = import.meta.env.DEV;
-const devPort = 8080 + (+location.port - 3000);
+const devPort = 3001 + (+location.port - 3000);
 const port = isDev ? devPort : location.port;
 
 const { protocol, hostname } = location;
