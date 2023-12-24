@@ -1,7 +1,6 @@
 <!-- AUTOMATION BADGES -->
 
-[![CodeQL](https://github.com/webceyhan/vite-chain/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webceyhan/vite-chain/actions/workflows/codeql-analysis.yml)
-[![Deploy to Heroku](https://github.com/webceyhan/vite-chain/actions/workflows/heroku.yml/badge.svg)](https://github.com/webceyhan/vite-chain/actions/workflows/heroku.yml)
+[![CodeQL](https://github.com/webceyhan/vite-chain/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/webceyhan/vite-chain/actions/workflows/github-code-scanning/codeql)
 
 <!-- LOGO (OPTIONAL) -->
 
@@ -25,11 +24,6 @@ providing rest API and SSE events to the frontend, and listening to P2P connecti
 Frontend application is used to interact with the backend node and to visualize the blockchain. It works in the same way
 as Etherscan website does to display the blockchain information and transactions. App is built with Vite + Vue + Bootstrap.
 Client can fetch real-time blockchain data using SSE (Server-Sent Events) to show on the dashboard.
-
-[View Demo](https://webceyhan-vite-chain.herokuapp.com/) |
-[Report Issue](https://github.com/webceyhan/vite-chain/issues) |
-[Request Feature](https://github.com/webceyhan/vite-chain/pulls) |
-[@webceyhan](https://twitter.com/webceyhan)
 
 <br>
 <!-- BLOCKCHAIN /////////////////////////////////////////////////////// -->
@@ -184,30 +178,11 @@ npm run preview
 <br>
 <!-- DEPLOYMENT ////////////////////////////////////////////////////////// -->
 
-## Deployment (Heroku)
+## Deployment (Render)
 
-A GitHub Action will automatically deploy the project to Heroku on every push.
+Project is linked to [Render](https://render.com/) for deployment.
 
-> See the details in [.github/workflows/heroku.yml](./.github/workflows/heroku.yml)
-
-1. Create an [Heroku](https://www.heroku.com/home) account.
-
-2. Install the `heroku-cli` as shown in the [guide](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli).
-
-3. Create a new Heroku app inside the project folder to bind it.
-
-    ```sh
-    heroku create
-    ```
-
-    > This will create a new application on Heroku server and bind it to your project by adding a remote `heroku` upstream to your git repository.
-
-4. Set the following secrets on your Github repository:
-    ```sh
-    HEROKU_API_KEY
-    HEROKU_APP_NAME
-    HEROKU_EMAIL
-    ```
+> It will automatically deploy the project to Render on every push.
 
 <br>
 <!-- REFERENCES ////////////////////////////////////////////////////////// -->
@@ -222,9 +197,6 @@ A GitHub Action will automatically deploy the project to Heroku on every push.
 -   [SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 -   [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 -   [WebSocket (WS)](https://github.com/websockets/ws)
--   [GitHub Actions](https://docs.github.com/en/actions)
-    -   [Heroku](https://www.heroku.com)
-    -   [heroku-deploy](https://github.com/akhileshns/heroku-deploy@)
 -   [Mastering Bitcoin](https://www.oreilly.com/library/view/mastering-bitcoin/9781491902639/ch01.html)
     -   [Naivecoin](https://github.com/lhartikk/naivecoin)
     -   [SavjeeCoin](https://github.com/Savjee/SavjeeCoin)
